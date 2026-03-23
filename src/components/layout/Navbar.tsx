@@ -47,11 +47,8 @@ export function Navbar() {
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="flex items-center gap-2 cursor-pointer"
         >
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shadow-md shadow-violet-500/30">
-            <Code2 className="w-4 h-4 text-white" />
-          </div>
           <span style={{ color: "var(--p-logo-text)", fontWeight: 700, fontSize: "1.1rem", transition: "color 0.3s" }}>
-            Portfolio<span style={{ color: "var(--p-accent)" }}>.</span>dev
+            linuxadona<span style={{ color: "var(--p-accent)" }}>.</span>dev
           </span>
         </button>
 

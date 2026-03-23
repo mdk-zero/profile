@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, MapPin, Send, CheckCircle, Linkedin, Github, Twitter } from "lucide-react";
+import { Mail, MapPin, Send, CheckCircle, Linkedin, Github, Facebook } from "lucide-react";
 import { motion } from "motion/react";
 
 export function Contact() {
@@ -18,14 +18,14 @@ export function Contact() {
   };
 
   const contactInfo = [
-    { icon: Mail, label: "Email", value: "hello@example.com", href: "mailto:hello@example.com" },
-    { icon: MapPin, label: "Location", value: "San Francisco, CA", href: "#" },
+    { icon: Mail, label: "Email", value: "linuxadona17@gmail.com", href: "mailto:linuxadona17@gmail.com" },
+    { icon: MapPin, label: "Location", value: "Balayan, Batangas, Philippines", href: "#" },
   ];
 
   const socials = [
-    { icon: Github, label: "GitHub", href: "#" },
+    { icon: Facebook, label: "Facebook", href: "https://www.facebook.com/Linux.Sale.Adona" },
+    { icon: Github, label: "GitHub", href: "https://github.com/itslinxad" },
     { icon: Linkedin, label: "LinkedIn", href: "#" },
-    { icon: Twitter, label: "Twitter", href: "#" },
   ];
 
   const inputStyle = {

@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio | Your Name",
+  title: "Portfolio | Linux Adona",
   description: "Personal portfolio showcasing projects, skills, and services",
 };
 

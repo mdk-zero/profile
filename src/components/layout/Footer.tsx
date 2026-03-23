@@ -15,11 +15,8 @@ export function Footer() {
     >
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center">
-            <Code2 className="w-3.5 h-3.5 text-white" />
-          </div>
           <span style={{ color: "var(--p-text-muted)", fontSize: "0.85rem" }}>
-            Portfolio<span style={{ color: "var(--p-accent)" }}>.</span>dev
+            linuxadona<span style={{ color: "var(--p-accent)" }}>.</span>dev
           </span>
         </div>
 
@@ -27,7 +24,7 @@ export function Footer() {
           className="flex items-center gap-1.5"
           style={{ color: "var(--p-text-muted)", fontSize: "0.8rem" }}
         >
-          © {year} Your Name · Built with
+          © {year} Linux Adona · Built with
           <Heart className="w-3 h-3" style={{ color: "var(--p-accent)", fill: "var(--p-accent)" }} />
           using React & Next.js
         </p>

@@ -7,7 +7,6 @@ import { motion } from "motion/react";
 const roles = [
   "Full-Stack Developer",
   "UI/UX Designer",
-  "React Specialist",
   "Problem Solver",
 ];
 
@@ -28,7 +27,7 @@ export function Hero() {
       } else {
         timeoutRef.current = setTimeout(() => {
           setTyping(false);
-        }, 2000);
+        }, 1000);
       }
     } else {
       if (displayed.length > 0) {
@@ -126,7 +125,7 @@ export function Hero() {
               backgroundClip: "text",
             }}
           >
-            Your Name
+            Linux Adona
           </span>
         </motion.h1>
 
