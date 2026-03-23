@@ -1,0 +1,10 @@
+description: >-
+  A simple point of sale system for coffee orders and intelligent inventory
+  management with real-time analytics and reporting.
+image: image.png
+tags:
+  - PHP
+  - JavaScript
+  - MySQL
+sourceUrl: https://github.com/itslinxad/Bros-Cafe
+featured: true

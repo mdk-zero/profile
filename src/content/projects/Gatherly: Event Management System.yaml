@@ -1,0 +1,12 @@
+description: >-
+  A centralized platform for Event Managers and Venue Owners for planning an
+  event with the help of AI Chatbot with real-time analytics and interactive
+  charts.
+image: image.png
+tags:
+  - PHP
+  - JavaScript
+  - MySQL
+  - Python
+sourceUrl: https://github.com/itslinxad/Gatherly
+featured: true
