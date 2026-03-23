@@ -16,7 +16,7 @@ export function Footer() {
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           <span style={{ color: "var(--p-text-muted)", fontSize: "0.85rem" }}>
-            linuxadona<span style={{ color: "var(--p-accent)" }}>.</span>dev
+            itslinxad
           </span>
         </div>
 
@@ -24,13 +24,11 @@ export function Footer() {
           className="flex items-center gap-1.5"
           style={{ color: "var(--p-text-muted)", fontSize: "0.8rem" }}
         >
-          © {year} Linux Adona · Built with
-          <Heart className="w-3 h-3" style={{ color: "var(--p-accent)", fill: "var(--p-accent)" }} />
-          using React & Next.js
+          © {year} Linux Adona
         </p>
 
         <div className="flex gap-5">
-          {["About", "Skills", "Projects", "Contact"].map((link) => (
+          {["About", "Services", "Projects", "Contact"].map((link) => (
             <button
               key={link}
               onClick={() => {

@@ -1,20 +1,137 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Mail, MapPin, Send, CheckCircle, Linkedin, Github, Facebook } from "lucide-react";
 import { motion } from "motion/react";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
+
+import { useTheme } from "@/components/ThemeProvider";
+
+const WEB3FORMS_SITE_KEY = "50b2fe65-b00b-4b9e-ad62-3ba471098be2";
 
 export function Contact() {
+  const { theme } = useTheme();
   const [form, setForm] = useState({ name: "", email: "", budget: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [captchaToken, setCaptchaToken] = useState("");
+  const captchaRef = useRef<HCaptcha>(null);
+  const [exchangeRate, setExchangeRate] = useState<number | null>(null);
+
+  useEffect(() => {
+    const detectCurrency = () => {
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const isPhilippines = timezone.includes("Manila") || timezone.includes("Asia/Manila");
+      return isPhilippines ? "PHP" : "USD";
+    };
+
+    const fetchExchangeRate = async () => {
+      const currency = detectCurrency();
+      if (currency === "USD") {
+        setExchangeRate(1);
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          "https://api.frankfurter.app/latest?from=USD&to=PHP"
+        );
+        const data = await response.json();
+        if (data.rates?.PHP) {
+          setExchangeRate(data.rates.PHP);
+        } else {
+          setExchangeRate(58);
+        }
+      } catch {
+        setExchangeRate(58);
+      }
+    };
+
+    fetchExchangeRate();
+  }, []);
+
+  const formatBudget = (usdAmount: number): string => {
+    if (exchangeRate === null) return `$${usdAmount.toLocaleString()}`;
+    const converted = usdAmount * exchangeRate;
+    if (exchangeRate === 1) return `$${usdAmount.toLocaleString()}`;
+
+    if (converted >= 1000000) {
+      return `₱${(converted / 1000000).toFixed(1)}M`;
+    } else if (converted >= 10000) {
+      return `₱${(converted / 1000).toFixed(0)}K`;
+    }
+    return `₱${Math.round(converted).toLocaleString()}`;
+  };
+
+  const getCurrencyLabel = () => {
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const isPhilippines = timezone.includes("Manila") || timezone.includes("Asia/Manila");
+    return isPhilippines ? "PHP" : "USD";
+  };
+
+  const budgetOptions = (() => {
+    const currency = getCurrencyLabel();
+    const format = (amount: number) => currency === "PHP" ? `${currency} ${amount.toLocaleString()}` : `$${amount.toLocaleString()}`;
+
+    return [
+      { label: `Below ${format(5000)}`, value: "below-5000" },
+      { label: `${format(5000)} - ${format(15000)}`, value: "5000-15000" },
+      { label: `${format(15000)} - ${format(50000)}`, value: "15000-50000" },
+      { label: `Above ${format(50000)}`, value: "above-50000" },
+    ];
+  })();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1500));
+    setError("");
+
+    if (!captchaToken) {
+      setError("Please complete the CAPTCHA.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+      if (!accessKey) {
+        setError("Form not configured. Please contact via email.");
+        setLoading(false);
+        return;
+      }
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: form.name,
+          email: form.email,
+          budget: form.budget,
+          message: form.message,
+          to: "linuxadona17@gmail.com",
+          "h-captcha-response": captchaToken,
+        }),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+        setForm({ name: "", email: "", budget: "", message: "" });
+        setCaptchaToken("");
+        captchaRef.current?.resetCaptcha();
+      } else {
+        setError("Something went wrong. Please try again.");
+        captchaRef.current?.resetCaptcha();
+      }
+    } catch {
+      setError("Something went wrong. Please try again.");
+      captchaRef.current?.resetCaptcha();
+    }
+
     setLoading(false);
-    setSubmitted(true);
   };
 
   const contactInfo = [
@@ -87,24 +204,6 @@ export function Contact() {
             transition={{ duration: 0.6 }}
             className="lg:col-span-2"
           >
-            <div
-              className="p-4 sm:p-5 rounded-xl sm:rounded-2xl mb-6 sm:mb-8"
-              style={{
-                background: "var(--p-accent-bg)",
-                border: "1px solid var(--p-accent-border)",
-              }}
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span style={{ color: "var(--p-accent)", fontWeight: 600, fontSize: "0.9rem" }}>
-                  Currently Available
-                </span>
-              </div>
-              <p style={{ color: "var(--p-text-muted)", fontSize: "0.8rem", lineHeight: 1.6 }}>
-                I&apos;m open to freelance projects, full-time roles, and exciting collaborations.
-              </p>
-            </div>
-
             <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
               {contactInfo.map(({ icon: Icon, label, value, href }) => (
                 <a
@@ -246,10 +345,11 @@ export function Contact() {
                       }}
                     >
                       <option value="" disabled>Select a budget range</option>
-                      <option value="<5k">Less than $5,000</option>
-                      <option value="5k-15k">$5,000 – $15,000</option>
-                      <option value="15k-50k">$15,000 – $50,000</option>
-                      <option value=">50k">$50,000+</option>
+                      {budgetOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
                     </select>
                   </div>
 
@@ -265,6 +365,17 @@ export function Contact() {
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl outline-none resize-none"
                       style={inputStyle}
+                    />
+                  </div>
+
+                  <div className="flex justify-center">
+                    <HCaptcha
+                      ref={captchaRef}
+                      sitekey={WEB3FORMS_SITE_KEY}
+                      reCaptchaCompat={false}
+                      theme={theme === "dark" ? "dark" : "light"}
+                      onVerify={(token) => setCaptchaToken(token)}
+                      onExpire={() => setCaptchaToken("")}
                     />
                   </div>
 
@@ -296,6 +407,11 @@ export function Contact() {
                       </>
                     )}
                   </button>
+                  {error && (
+                    <p className="text-center text-sm" style={{ color: "#ef4444" }}>
+                      {error}
+                    </p>
+                  )}
                 </form>
               )}
             </div>

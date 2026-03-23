@@ -5,8 +5,8 @@ import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 
 const stats = [
-  { icon: Calendar, value: "5+", label: "Years Experience" },
-  { icon: Award, value: "40+", label: "Projects Delivered" },
+  { icon: Calendar, value: "2+", label: "Years Experience" },
+  { icon: Award, value: "15+", label: "Projects Delivered" },
   { icon: Coffee, value: "∞", label: "Cups of Coffee" },
   { icon: MapPin, value: "Remote", label: "Based In" },
 ];
@@ -149,30 +149,6 @@ export function About() {
                 />
               </motion.div>
 
-              {/* Floating status card */}
-              <motion.div
-                className="absolute -bottom-3 sm:-bottom-4 right-2 sm:right-4 px-3 sm:px-4 py-2 sm:py-3 rounded-xl"
-                initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.6 }}
-                style={{
-                  background: "var(--p-bg-card)",
-                  border: "1px solid var(--p-accent-border)",
-                  backdropFilter: "blur(12px)",
-                  boxShadow: "var(--p-card-shadow)",
-                }}
-                whileHover={{ scale: 1.05, y: -5 }}
-              >
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <motion.span 
-                    className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-emerald-400"
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
-                  <span style={{ color: "var(--p-text)", fontSize: "0.7rem sm:0.8rem" }}>Open to work</span>
-                </div>
-              </motion.div>
-
               {/* Decorative floating elements */}
               <motion.div
                 className="absolute -top-3 sm:-top-4 -left-3 sm:-left-4 w-6 sm:w-8 h-6 sm:h-8 rounded-lg border-2"
@@ -223,9 +199,9 @@ export function About() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.4 }}
             >
-              I&apos;m a passionate full-stack developer with over 5 years of experience building
-              scalable web applications. I specialize in creating seamless user experiences
-              that combine beautiful design with robust engineering.
+              I&apos;m a passionate full-stack developer with around 2 years of experience building
+              scalable web applications. I enjoy creating seamless user experiences
+              that combine beautiful design with secure development.
             </motion.p>
             <motion.p 
               className="mb-6" 
@@ -236,32 +212,8 @@ export function About() {
             >
               When I&apos;m not coding, you&apos;ll find me exploring new technologies, contributing to
               open-source projects, or mentoring aspiring developers. I believe great software
-              is built at the intersection of creativity and technical excellence.
+              is built with the combination of creativity and technical knowledge.
             </motion.p>
-
-            {/* Tech tags with stagger animation */}
-            <motion.div 
-              className="flex flex-wrap gap-2 mb-8"
-            >
-              {["React", "Node.js", "TypeScript", "MySQL", "Figma"].map((tag, index) => (
-                <motion.span
-                  key={tag}
-                  className="px-3 py-1 rounded-full"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ delay: 0.5 + index * 0.1 }}
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  style={{
-                    background: "var(--p-accent-bg)",
-                    border: "1px solid var(--p-accent-border)",
-                    color: "var(--p-tag)",
-                    fontSize: "0.8rem",
-                  }}
-                >
-                  {tag}
-                </motion.span>
-              ))}
-            </motion.div>
 
             {/* Stats grid with counter animation */}
             <div className="grid grid-cols-2 gap-3 sm:gap-4">

@@ -2,97 +2,68 @@
 
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
+import { Globe, Cpu, Palette, ArrowRight } from "lucide-react";
+import {
+  FaReact,
+  FaNodeJs,
+  FaJs,
+  FaGitAlt,
+  FaFigma,
+  FaJava,
+} from "react-icons/fa";
+import {
+  SiNextdotjs,
+  SiTypescript,
+  SiMysql,
+  SiMongodb,
+  SiTailwindcss,
+  SiPhp,
+  SiLaravel,
+  SiPython,
+  SiCplusplus,
+} from "react-icons/si";
 
-const skillCategories = [
+const services = [
   {
-    title: "Frontend",
-    color: "#8b5cf6",
-    skills: [
-      { name: "React / Next.js", level: 95 },
-      { name: "TypeScript", level: 90 },
-      { name: "Tailwind CSS", level: 92 },
-      { name: "Figma & Design", level: 80 },
-    ],
+    title: "Web Development",
+    icon: Globe,
+    description: "I build fast, responsive, and visually appealing  websites and web applications aligned to your needs.",
+    features: ["Custom Websites", "Web Applications", "Landing Pages", "E-commerce"],
+    iconColor: "#8b5cf6",
   },
   {
-    title: "Backend",
-    color: "#6366f1",
-    skills: [
-      { name: "Node.js / Express", level: 88 },
-      { name: "PostgreSQL", level: 82 },
-      { name: "GraphQL", level: 78 },
-      { name: "REST APIs", level: 93 },
-    ],
+    title: "Arduino Projects",
+    icon: Cpu,
+    description: "From prototypes to fully functional hardware solutions, I bring your electronic ideas to life.",
+    features: ["IoT Solutions", "Prototyping", "Sensor Integration", "Automation"],
+    iconColor: "#6366f1",
   },
   {
-    title: "DevOps & Tools",
-    color: "#a78bfa",
-    skills: [
-      { name: "AWS / Cloud", level: 75 },
-      { name: "Docker", level: 80 },
-      { name: "Git & CI/CD", level: 90 },
-      { name: "Testing (Jest)", level: 85 },
-    ],
+    title: "UI/UX Design",
+    icon: Palette,
+    description: "Creating intuitive and beautiful user interfaces that provide satisfactory experiences.",
+    features: ["Wireframing", "Prototyping", "User Research", "Design Systems"],
+    iconColor: "#a78bfa",
   },
 ];
 
 const techStack = [
-  "React", "Next.js", "TypeScript", "JavaScript", "Node.js",
-  "Express", "MySQL", "MongoDB", "Tailwind", "Figma", "Git",
+  { name: "React", icon: FaReact },
+  { name: "Next.js", icon: SiNextdotjs },
+  { name: "TypeScript", icon: SiTypescript },
+  { name: "JavaScript", icon: FaJs },
+  { name: "Node.js", icon: FaNodeJs },
+  { name: "Python", icon: SiPython },
+  { name: "Java", icon: FaJava },
+  { name: "C++", icon: SiCplusplus },
+  { name: "PHP", icon: SiPhp },
+  { name: "Laravel", icon: SiLaravel },
+  { name: "MySQL", icon: SiMysql },
+  { name: "MongoDB", icon: SiMongodb },
+  { name: "Tailwind", icon: SiTailwindcss },
+  { name: "Figma", icon: FaFigma },
+  { name: "Git", icon: FaGitAlt },
 ];
-
-function SkillBar({ name, level, color, delay }: { name: string; level: number; color: string; delay: number }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-
-  return (
-    <div ref={ref} className="mb-4">
-      <div className="flex justify-between mb-1.5">
-        <span style={{ color: "var(--p-text-secondary)", fontSize: "0.85rem" }}>{name}</span>
-        <motion.span 
-          style={{ color: "var(--p-text-muted)", fontSize: "0.8rem" }}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: delay + 0.5 }}
-        >
-          {level}%
-        </motion.span>
-      </div>
-      <div
-        className="h-1.5 rounded-full overflow-hidden relative"
-        style={{ background: "var(--p-skill-track)" }}
-      >
-        {/* Glow effect */}
-        <motion.div
-          className="absolute top-0 left-0 h-full rounded-full"
-          style={{ 
-            background: `linear-gradient(90deg, ${color}, ${color}80)`,
-            boxShadow: `0 0 10px ${color}40`,
-          }}
-          initial={{ width: 0 }}
-          animate={isInView ? { width: `${level}%` } : { width: 0 }}
-          transition={{ duration: 1.2, delay, ease: [0.22, 1, 0.36, 1] }}
-        />
-        {/* Shimmer effect */}
-        <motion.div
-          className="absolute top-0 left-0 h-full w-full rounded-full"
-          animate={isInView ? {
-            backgroundPosition: ["200% 0", "-200% 0"],
-          } : {}}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            repeatDelay: 1,
-          }}
-          style={{
-            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
-            backgroundSize: "200% 100%",
-          }}
-        />
-      </div>
-    </div>
-  );
-}
 
 export function Skills() {
   const sectionRef = useRef(null);
@@ -107,38 +78,34 @@ export function Skills() {
     >
       {/* Background decorations */}
       <motion.div
-        className="absolute top-0 left-1/4 w-96 h-96 rounded-full blur-[150px] pointer-events-none"
+        className="absolute top-20 left-0 w-96 h-96 rounded-full blur-[150px] pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(139, 92, 246, 0.1), transparent)",
+          background: "radial-gradient(circle, rgba(139, 92, 246, 0.08), transparent)",
           opacity: isInView ? 1 : 0,
         }}
-        transition={{ duration: 1.5 }}
       />
       <motion.div
-        className="absolute bottom-0 right-1/4 w-80 h-80 rounded-full blur-[120px] pointer-events-none"
+        className="absolute bottom-20 right-0 w-80 h-80 rounded-full blur-[120px] pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(99, 102, 241, 0.1), transparent)",
+          background: "radial-gradient(circle, rgba(99, 102, 241, 0.08), transparent)",
           opacity: isInView ? 1 : 0,
         }}
-        transition={{ duration: 1.5, delay: 0.3 }}
       />
 
       <div className="max-w-6xl mx-auto relative z-10">
-        {/* Animated section header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <motion.div 
+          <motion.div
             className="w-16 h-1 mx-auto mb-6 rounded-full"
             style={{ background: "linear-gradient(90deg, #7c3aed, #8b5cf6)" }}
             initial={{ scaleX: 0 }}
             animate={isInView ? { scaleX: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
           />
-          <motion.p
+          <p
             className="mb-3"
             style={{
               color: "var(--p-accent)",
@@ -146,131 +113,126 @@ export function Skills() {
               letterSpacing: "0.15em",
               textTransform: "uppercase",
             }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.3 }}
           >
-            What I work with
-          </motion.p>
-          <motion.h2
+            What I offer
+          </p>
+          <h2
             style={{
-              fontSize: "clamp(1.8rem, 4vw, 2.5rem)",
+              fontSize: "clamp(2rem, 5vw, 3rem)",
               fontWeight: 700,
               color: "var(--p-text)",
-              lineHeight: 1.2,
             }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.4 }}
           >
-            Skills & Expertise
-          </motion.h2>
+            Services I Provide
+          </h2>
+          <p className="mt-4 max-w-2xl mx-auto" style={{ color: "var(--p-text-muted)" }}>
+            I specialize in creating digital solutions that combine functionality with aesthetics,
+            helping you bring your vision to life.
+          </p>
         </motion.div>
 
-        {/* Skill cards grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-12 sm:mb-16">
-          {skillCategories.map((category, catIdx) => (
+        {/* Services Cards */}
+        <div className="grid md:grid-cols-3 gap-6 mb-20">
+          {services.map((service, i) => (
             <motion.div
-              key={category.title}
-              initial={{ opacity: 0, y: 40, scale: 0.95 }}
-              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-              transition={{ duration: 0.6, delay: catIdx * 0.15 }}
-              className="p-6 rounded-2xl relative overflow-hidden group"
+              key={service.title}
+              initial={{ opacity: 0, y: 40 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.2 + i * 0.15, duration: 0.6 }}
+              whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              className="group relative p-8 rounded-2xl overflow-hidden"
               style={{
                 background: "var(--p-bg-card)",
                 border: "1px solid var(--p-border)",
-                boxShadow: "var(--p-card-shadow)",
-              }}
-              whileHover={{ 
-                scale: 1.02,
-                borderColor: `${category.color}40`,
-                boxShadow: `0 10px 40px rgba(0,0,0,0.1), 0 0 30px ${category.color}10`
               }}
             >
-              {/* Hover glow */}
-              <div 
+              {/* Gradient glow on hover */}
+              <div
                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 style={{
-                  background: `radial-gradient(circle at 50% 0%, ${category.color}15, transparent 70%)`,
+                  background: `radial-gradient(circle at 50% 0%, ${service.iconColor}15, transparent 60%)`,
                 }}
               />
-              
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-6">
-                  <motion.div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center"
-                    style={{
-                      background: `${category.color}15`,
-                      border: `1px solid ${category.color}30`,
-                    }}
-                    whileHover={{ rotate: [0, -10, 10, 0] }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <div 
-                      className="w-3 h-3 rounded-full"
-                      style={{ background: category.color }}
+
+              {/* Icon */}
+              <motion.div
+                className="w-16 h-16 rounded-2xl mb-6 flex items-center justify-center relative"
+                style={{
+                  background: `${service.iconColor}15`,
+                  border: `1px solid ${service.iconColor}30`,
+                }}
+                whileHover={{ rotate: [0, -10, 10, 0] }}
+                transition={{ duration: 0.5 }}
+              >
+                <service.icon className="w-8 h-8" style={{ color: service.iconColor }} />
+              </motion.div>
+
+              {/* Title */}
+              <h3 className="text-xl font-bold mb-3" style={{ color: "var(--p-text)" }}>
+                {service.title}
+              </h3>
+
+              {/* Description */}
+              <p className="mb-6 text-sm leading-relaxed" style={{ color: "var(--p-text-muted)" }}>
+                {service.description}
+              </p>
+
+              {/* Features */}
+              <div className="space-y-2">
+                {service.features.map((feature) => (
+                  <div key={feature} className="flex items-center gap-2">
+                    <div
+                      className="w-1.5 h-1.5 rounded-full"
+                      style={{ background: service.iconColor }}
                     />
-                  </motion.div>
-                  <h3 style={{ color: "var(--p-text)", fontWeight: 600 }}>{category.title}</h3>
-                </div>
-                
-                <div className="space-y-1">
-                  {category.skills.map((skill, skillIdx) => (
-                    <SkillBar
-                      key={skill.name}
-                      name={skill.name}
-                      level={skill.level}
-                      color={category.color}
-                      delay={catIdx * 0.15 + skillIdx * 0.1}
-                    />
-                  ))}
-                </div>
+                    <span className="text-sm" style={{ color: "var(--p-text-secondary)" }}>
+                      {feature}
+                    </span>
+                  </div>
+                ))}
               </div>
+
+              {/* Arrow indicator */}
+              <motion.div
+                className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-300"
+                style={{ color: service.iconColor }}
+                whileHover={{ x: 5 }}
+              >
+                <ArrowRight className="w-5 h-5" />
+              </motion.div>
             </motion.div>
           ))}
         </div>
 
-        {/* Tech stack tags */}
+        {/* Tech Stack */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.6 }}
+          transition={{ delay: 0.8 }}
           className="text-center"
         >
-          <motion.p 
-            className="mb-6" 
-            style={{ color: "var(--p-text-muted)", fontSize: "0.85rem" }}
-          >
-            Technologies I use regularly
-          </motion.p>
-          
+          <p className="mb-6 text-sm font-medium" style={{ color: "var(--p-text-muted)" }}>
+            Technologies I work with
+          </p>
           <div className="flex flex-wrap justify-center gap-3">
             {techStack.map((tech, i) => (
-              <motion.span
-                key={tech}
-                initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
-                transition={{ delay: 0.7 + i * 0.05 }}
-                whileHover={{ 
-                  scale: 1.1, 
-                  y: -5,
-                  boxShadow: "0 10px 30px rgba(139, 92, 246, 0.2)"
-                }}
-                className="px-4 py-2 rounded-lg cursor-default"
+              <motion.div
+                key={tech.name}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ delay: 0.9 + i * 0.05 }}
+                whileHover={{ scale: 1.1, y: -3 }}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl"
                 style={{
                   background: "var(--p-bg-card)",
                   border: "1px solid var(--p-border)",
-                  color: "var(--p-text-secondary)",
-                  fontSize: "0.85rem",
-                  boxShadow: "var(--p-card-shadow)",
                 }}
               >
-                {/* Sparkle effect on hover */}
-                <span className="relative">
-                  <span className="absolute -top-1 -right-1 w-1 h-1 rounded-full bg-[var(--p-accent)] opacity-0 group-hover:opacity-100" />
-                  {tech}
+                <tech.icon className="w-5 h-5" style={{ color: "var(--p-accent)" }} />
+                <span className="text-sm font-medium" style={{ color: "var(--p-text)" }}>
+                  {tech.name}
                 </span>
-              </motion.span>
+              </motion.div>
             ))}
           </div>
         </motion.div>

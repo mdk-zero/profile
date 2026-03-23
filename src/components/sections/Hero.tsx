@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { Github, Linkedin, Twitter, Download } from "lucide-react";
+import { FaFacebookF } from "react-icons/fa";
 import { motion, useScroll, useTransform } from "motion/react";
 
 const roles = [
@@ -169,31 +170,6 @@ export function Hero() {
         className="relative z-10 text-center px-6 max-w-4xl mx-auto"
         style={{ y: contentY, opacity: contentOpacity }}
       >
-        {/* Animated badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.5, type: "spring", stiffness: 200 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-8"
-          style={{
-            borderColor: "var(--p-accent-border)",
-            background: "var(--p-accent-bg)",
-            color: "var(--p-accent)",
-            fontSize: "0.8rem",
-          }}
-          whileHover={{ scale: 1.05 }}
-        >
-          <motion.span 
-            className="w-2 h-2 rounded-full bg-emerald-400"
-            animate={{ 
-              scale: [1, 1.3, 1],
-              opacity: [1, 0.7, 1]
-            }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
-          Available for new projects
-        </motion.div>
-
         {/* Animated gradient text */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -313,9 +289,9 @@ export function Hero() {
           className="flex items-center justify-center gap-4"
         >
           {[
-            { icon: Github, href: "#", label: "GitHub" },
+            { icon: FaFacebookF, href: "https://www.facebook.com/Linux.Sale.Adona", label: "Facebook" },
+            { icon: Github, href: "https://www.github.com/itslinxad/", label: "GitHub" },
             { icon: Linkedin, href: "#", label: "LinkedIn" },
-            { icon: Twitter, href: "#", label: "Twitter" },
           ].map(({ icon: Icon, href, label }, index) => (
             <motion.a
               key={label}

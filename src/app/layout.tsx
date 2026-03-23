@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { ScrollRestoration } from "@/components/ScrollRestoration";
+import AnimationReset from "@/components/AnimationReset";
 
 const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -22,7 +22,27 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Portfolio | Linux Adona",
   description: "Personal portfolio showcasing projects, skills, and services",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
+
+function ThemeScript() {
+  const script = `
+    (function() {
+      try {
+        var theme = localStorage.getItem('portfolio-theme') || 'dark';
+        document.documentElement.classList.remove('theme-dark', 'theme-light');
+        document.documentElement.classList.add('theme-' + theme);
+      } catch (e) {}
+    })();
+  `;
+  return <script dangerouslySetInnerHTML={{ __html: script }} />;
+}
+
+export const viewport = {
+  key: "viewport",
+} as const;
 
 export default function RootLayout({
   children,
@@ -31,19 +51,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <ThemeScript />
+      </head>
       <body className={cn(
         "min-h-screen",
         "antialiased",
+        figtree.variable,
         geistSans.variable,
         geistMono.variable,
-        "font-sans",
-        figtree.variable
+        "font-sans"
       )}>
         <ThemeProvider>
-          <ScrollRestoration />
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <AnimationReset>
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </AnimationReset>
         </ThemeProvider>
       </body>
     </html>

@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X, Code2, Sun, Moon } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
 import { motion } from "motion/react";
 import { useTheme } from "@/components/ThemeProvider";
 
 const navLinks = [
   { label: "About", href: "#about" },
-  { label: "Skills", href: "#skills" },
+  { label: "Services", href: "#skills" },
   { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
 ];
@@ -56,9 +56,10 @@ export function Navbar() {
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="flex items-center gap-2 cursor-pointer group"
         >
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-violet-500/30 group-hover:shadow-violet-500/50 transition-all duration-300 group-hover:scale-110">
-            <Code2 className="w-4 h-4 text-white" />
-          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className="w-8 h-8 group-hover:scale-110 transition-transform duration-300" style={{ filter: "drop-shadow(0 0 6px rgba(255, 255, 255, 0.3))" }}>
+            <circle cx="16" cy="16" r="15" fill="#0a0a0f"/>
+            <polygon points="24,20 10,20 10,10" fill="white"/>
+          </svg>
           <span 
             style={{ 
               color: "var(--p-logo-text)", 
@@ -68,32 +69,16 @@ export function Navbar() {
             }}
             className="group-hover:text-[var(--p-accent)] transition-colors duration-300 hidden sm:block"
           >
-            linuxadona<span style={{ color: "var(--p-accent)" }}>.</span>dev
+            itslinxad
           </span>
         </button>
       </div>
 
-      {/* Theme toggle, Hire Me, and Mobile menu - top right */}
+      {/* Theme toggle and Mobile menu - top right */}
       <div className="fixed top-6 right-4 z-50 flex items-center gap-2">
         <button
-          onClick={() => handleNavClick("#contact")}
-          className="px-4 py-2 rounded-full text-white text-sm font-medium transition-all duration-300 cursor-pointer relative overflow-hidden group hidden sm:block"
-          style={{
-            background: "linear-gradient(135deg, #7c3aed, #4f46e5)",
-            boxShadow: "0 4px 15px var(--p-accent-glow)",
-          }}
-        >
-          <span className="relative z-10">Hire Me</span>
-          <motion.div 
-            className="absolute inset-0 bg-white/20"
-            initial={{ x: "-100%" }}
-            whileHover={{ x: "100%" }}
-            transition={{ duration: 0.5 }}
-          />
-        </button>
-        <button
           onClick={toggleTheme}
-          className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110 cursor-pointer"
+          className="w-9 h-9 rounded-lg flex items-center justify-center cursor-pointer"
           style={{
             background: "var(--p-accent-bg)",
             border: "1px solid var(--p-accent-border)",
@@ -101,17 +86,11 @@ export function Navbar() {
           }}
           aria-label="Toggle theme"
         >
-          <motion.div
-            className="transition-transform duration-500"
-            animate={{ rotate: theme === "dark" ? 0 : 180 }}
-            whileHover={{ rotate: 360 }}
-          >
-            {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-          </motion.div>
+          {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
         </button>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-9 h-9 md:hidden rounded-lg flex items-center justify-center transition-transform duration-300 cursor-pointer"
+          className="w-9 h-9 md:hidden rounded-lg flex items-center justify-center cursor-pointer"
           style={{ color: "var(--p-text)" }}
         >
           {isOpen ? (
