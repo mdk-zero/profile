@@ -79,16 +79,16 @@ export function Contact() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-5 gap-10">
+        <div className="grid lg:grid-cols-5 gap-8 lg:gap-10">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="md:col-span-2"
+            className="lg:col-span-2"
           >
             <div
-              className="p-5 rounded-2xl mb-8"
+              className="p-4 sm:p-5 rounded-xl sm:rounded-2xl mb-6 sm:mb-8"
               style={{
                 background: "var(--p-accent-bg)",
                 border: "1px solid var(--p-accent-border)",
@@ -105,12 +105,12 @@ export function Contact() {
               </p>
             </div>
 
-            <div className="space-y-4 mb-8">
+            <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
               {contactInfo.map(({ icon: Icon, label, value, href }) => (
                 <a
                   key={label}
                   href={href}
-                  className="flex items-center gap-4 p-4 rounded-xl transition-all duration-200 block"
+                  className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg sm:rounded-xl transition-all duration-200 block"
                   style={{
                     background: "var(--p-bg-card)",
                     border: "1px solid var(--p-border)",
@@ -160,10 +160,10 @@ export function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="md:col-span-3"
+            className="lg:col-span-3"
           >
             <div
-              className="p-8 rounded-2xl"
+              className="p-5 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl"
               style={{
                 background: "var(--p-bg-card)",
                 border: "1px solid var(--p-border)",

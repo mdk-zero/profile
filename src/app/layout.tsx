@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { ScrollRestoration } from "@/components/ScrollRestoration";
 
 const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -39,6 +40,7 @@ export default function RootLayout({
         figtree.variable
       )}>
         <ThemeProvider>
+          <ScrollRestoration />
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />
