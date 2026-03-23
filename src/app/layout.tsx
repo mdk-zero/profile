@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio | Linux Adona",
+  title: "Profile | Linux Adona",
   description: "Personal portfolio showcasing projects, skills, and services",
   icons: {
     icon: "/favicon.svg",

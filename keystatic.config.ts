@@ -111,7 +111,6 @@ export default config({
           linkedin: fields.url({ label: "LinkedIn URL" }),
           website: fields.url({ label: "Website URL" }),
         }),
-        availableForHire: fields.checkbox({ label: "Available for Hire" }),
       },
     }),
   },
