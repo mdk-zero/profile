@@ -28,16 +28,21 @@ export function Footer() {
         </p>
 
         <div className="flex gap-5">
-          {["About", "Services", "Projects", "Contact"].map((link) => (
+          {[
+            { label: "About", id: "about" },
+            { label: "Services", id: "skills" },
+            { label: "Projects", id: "projects" },
+            { label: "Contact", id: "contact" },
+          ].map((link) => (
             <button
-              key={link}
+              key={link.label}
               onClick={() => {
-                const el = document.getElementById(link.toLowerCase());
+                const el = document.getElementById(link.id);
                 if (el) el.scrollIntoView({ behavior: "smooth" });
               }}
               style={{ color: "var(--p-text-muted)", fontSize: "0.8rem", transition: "color 0.2s", background: "none", border: "none", cursor: "pointer" }}
             >
-              {link}
+              {link.label}
             </button>
           ))}
         </div>

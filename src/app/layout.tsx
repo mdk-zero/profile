@@ -2,10 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Figtree } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import AnimationReset from "@/components/AnimationReset";
+import { LayoutWrapper } from "@/components/LayoutWrapper";
 
 const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -64,9 +63,9 @@ export default function RootLayout({
       )}>
         <ThemeProvider>
           <AnimationReset>
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
+            <LayoutWrapper>
+              {children}
+            </LayoutWrapper>
           </AnimationReset>
         </ThemeProvider>
       </body>

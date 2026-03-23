@@ -9,9 +9,8 @@ export default config({
       label: "Projects",
       slugField: "title",
       path: "src/content/projects/*",
-      format: { contentField: "markdownContent" },
       schema: {
-        title: fields.slug({ name: { label: "Title" } }),
+        title: fields.text({ label: "Title" }),
         description: fields.text({ label: "Description" }),
         longDescription: fields.text({
           label: "Long Description",
@@ -33,7 +32,7 @@ export default config({
       slugField: "name",
       path: "src/content/skills/*",
       schema: {
-        name: fields.slug({ name: { label: "Name" } }),
+        name: fields.text({ label: "Name" }),
         category: fields.select({
           label: "Category",
           options: [
@@ -63,7 +62,7 @@ export default config({
       slugField: "title",
       path: "src/content/services/*",
       schema: {
-        title: fields.slug({ name: { label: "Title" } }),
+        title: fields.text({ label: "Title" }),
         description: fields.text({ label: "Description" }),
         features: fields.array(fields.text({ label: "Feature" }), {
           label: "Features",
@@ -77,9 +76,8 @@ export default config({
       label: "Blog Posts",
       slugField: "title",
       path: "src/content/blog/*",
-      format: { contentField: "content" },
       schema: {
-        title: fields.slug({ name: { label: "Title" } }),
+        title: fields.text({ label: "Title" }),
         excerpt: fields.text({ label: "Excerpt" }),
         coverImage: fields.image({ label: "Cover Image" }),
         publishedAt: fields.date({ label: "Published At" }),
@@ -101,7 +99,7 @@ export default config({
       slugField: "name",
       path: "src/content/profile/*",
       schema: {
-        name: fields.slug({ name: { label: "Name" } }),
+        name: fields.text({ label: "Name" }),
         title: fields.text({ label: "Title" }),
         bio: fields.text({ label: "Bio", multiline: true }),
         avatar: fields.image({ label: "Avatar" }),
