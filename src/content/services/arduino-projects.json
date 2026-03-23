@@ -1,0 +1,11 @@
+---
+title: arduino-projects
+description: Custom hardware solutions for automation, IoT, and prototyping. From concept to working prototype.
+features:
+  - Custom PCB design
+  - Sensor integration
+  - Wireless communication
+  - Firmware development
+icon: Cpu
+featured: false
+---

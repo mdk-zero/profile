@@ -1,0 +1,15 @@
+{
+  "name": {
+    "first": "Your",
+    "last": "Name"
+  },
+  "title": "Full Stack Developer & Designer",
+  "bio": "I build exceptional digital experiences that are fast, accessible, and visually stunning. With expertise in web development, UI/UX design, and hardware projects, I bring ideas to life. I'm passionate about creating products that make a difference.",
+  "socialLinks": {
+    "github": "https://github.com",
+    "twitter": "https://twitter.com",
+    "linkedin": "https://linkedin.com",
+    "website": "https://example.com"
+  },
+  "availableForHire": true
+}
