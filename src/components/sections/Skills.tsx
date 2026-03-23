@@ -37,8 +37,8 @@ const skillCategories = [
 
 const techStack = [
   "React", "Next.js", "TypeScript", "JavaScript", "Node.js",
-  "Express", "PostgreSQL", "MongoDB", "GraphQL", "Tailwind",
-  "Figma", "AWS", "Docker", "Git", "Prisma", "Redis",
+  "Express", "MySQL", "MongoDB", "Tailwind",
+  "Figma", "Git",
 ];
 
 function SkillBar({ name, level, color, delay }: { name: string; level: number; color: string; delay: number }) {

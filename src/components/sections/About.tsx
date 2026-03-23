@@ -71,7 +71,7 @@ export function About() {
                 style={{ border: "1px solid var(--p-accent-border)" }}
               >
                 <img
-                  src="https://images.unsplash.com/photo-1653732212701-b729f0b08330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBkZXZlbG9wZXIlMjBwb3J0cmFpdCUyMGhlYWRzaG90fGVufDF8fHx8MTc3NDE4NDQ1MXww&ixlib=rb-4.1.0&q=80&w=1080"
+                  src="https://scontent.fmnl45-2.fna.fbcdn.net/v/t39.30808-6/615403695_25532891566332818_2839431724438749400_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=1d70fc&_nc_eui2=AeGaDCPUKmafCu5_InG3I4rUwxfPWdD6z6rDF89Z0PrPqllNGCed715EQK39Ji5zabSnvbiEbAGTbQ6Btdzwt8iH&_nc_ohc=EZOZJLQ_rwUQ7kNvwFb_-H0&_nc_oc=Adr5z2nYr7mq0OQIHZYF6mIVKh8NZklt761dQYBD6tGvlOSGRUcCmlUEpAZadROcOr9hjBYrsbdo9XSAHeYdmMro&_nc_zt=23&_nc_ht=scontent.fmnl45-2.fna&_nc_gid=Lg4VfYF1eS1Lsigz2NSRFA&_nc_ss=7a32e&oh=00_AfzKXOS86H6mN98RfG4QHiRiDJZ4NiXgNUnRfrcHaZNQfw&oe=69C6FA78"
                   alt="Profile"
                   className="w-full h-auto object-cover"
                   style={{ aspectRatio: "4/5" }}
@@ -133,7 +133,7 @@ export function About() {
             </p>
 
             <div className="flex flex-wrap gap-2 mb-8">
-              {["React", "Node.js", "TypeScript", "PostgreSQL", "Figma", "AWS"].map((tag) => (
+              {["React", "Node.js", "TypeScript", "MySQL", "Figma"].map((tag) => (
                 <span
                   key={tag}
                   className="px-3 py-1 rounded-full"
