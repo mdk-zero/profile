@@ -138,8 +138,8 @@ export function Skills() {
               key={service.title}
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.2 + i * 0.15, duration: 0.6 }}
-              whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              transition={{ delay: 0.1 + i * 0.15, duration: 0.3 }}
+              whileHover={{ y: -8, transition: { duration: 0.2 } }}
               className="group relative p-8 rounded-2xl overflow-hidden"
               style={{
                 background: "var(--p-bg-card)",

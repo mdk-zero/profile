@@ -115,13 +115,15 @@ export function Navbar() {
           {navLinks.map((link) => {
             const isActive = activeSection === link.href.slice(1);
             return (
-              <button
+              <motion.button
                 key={link.label}
                 onClick={() => handleNavClick(link.href)}
-                className="relative group cursor-pointer px-3 py-1.5 rounded-lg transition-all duration-300"
+                className="relative group cursor-pointer px-3 py-1.5 rounded-lg"
+                whileHover={{ scale: 1.1, x: -4 }}
+                transition={{ duration: 0.15 }}
               >
                 <motion.span 
-                  className="text-sm font-medium transition-all duration-300 block"
+                  className="text-sm font-medium block"
                   style={{ 
                     color: isActive ? "var(--p-accent)" : "var(--p-text-secondary)",
                     textShadow: isActive ? "0 0 20px var(--p-accent)" : "none",
@@ -134,7 +136,14 @@ export function Navbar() {
                 >
                   {link.label}
                 </motion.span>
-              </button>
+                <motion.div
+                  className="absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0.5 rounded-full"
+                  style={{ background: "var(--p-accent)" }}
+                  initial={{ width: 0 }}
+                  whileHover={{ width: "100%" }}
+                  transition={{ duration: 0.1 }}
+                />
+              </motion.button>
             );
           })}
         </motion.div>
@@ -156,15 +165,18 @@ export function Navbar() {
           {navLinks.map((link) => {
             const isActive = activeSection === link.href.slice(1);
             return (
-              <button
+              <motion.button
                 key={link.label}
                 onClick={() => handleNavClick(link.href)}
-                className="text-left py-3 px-4 rounded-xl cursor-pointer transition-all duration-200 flex items-center gap-3"
+                className="text-left py-3 px-4 rounded-xl cursor-pointer flex items-center gap-3"
                 style={{
                   background: isActive ? "var(--p-accent-bg)" : "transparent",
                   color: isActive ? "var(--p-accent)" : "var(--p-text-secondary)",
                   border: isActive ? "1px solid var(--p-accent-border)" : "1px solid transparent",
                 }}
+                whileHover={{ scale: 1.02, x: 4 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.1 }}
               >
                 <span 
                   className="w-1.5 h-1.5 rounded-full transition-all duration-300"
@@ -174,7 +186,7 @@ export function Navbar() {
                   }}
                 />
                 {link.label}
-              </button>
+              </motion.button>
             );
           })}
           <button

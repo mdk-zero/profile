@@ -1,14 +1,24 @@
 "use client";
 
-import { MapPin, Calendar, Coffee, Award } from "lucide-react";
+import { Calendar, Award, Terminal } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
+import { SiArchlinux, SiHyprland, SiNeovim, SiZsh, SiFedora } from "react-icons/si";
+import { VscTerminalBash } from "react-icons/vsc";
 
 const stats = [
   { icon: Calendar, value: "2+", label: "Years Experience" },
   { icon: Award, value: "15+", label: "Projects Delivered" },
-  { icon: Coffee, value: "∞", label: "Cups of Coffee" },
-  { icon: MapPin, value: "Remote", label: "Based In" },
+];
+
+const linuxStack = [
+  { icon: SiArchlinux, label: "Arch Linux", color: "#1793D1" },
+  { icon: SiFedora, label: "Fedora", color: "#51A2DA" },
+  { icon: SiHyprland, label: "Hyprland", color: "#4ECDE6" },
+  { icon: SiNeovim, label: "Neovim", color: "#57A64A" },
+  { icon: Terminal, label: "Ghostty", color: "#8B5CF6" },
+  { icon: SiZsh, label: "Zsh", color: "#4ADE80" },
+  { icon: VscTerminalBash, label: "Bash", color: "#F59E0B" },
 ];
 
 function AnimatedCounter({ value }: { value: string }) {
@@ -216,7 +226,7 @@ export function About() {
             </motion.p>
 
             {/* Stats grid with counter animation */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-8">
               {stats.map(({ icon: Icon, value, label }, index) => (
                 <motion.div
                   key={label}
@@ -253,6 +263,42 @@ export function About() {
                 </motion.div>
               ))}
             </div>
+
+            {/* Linux Workstation Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 1.0 }}
+            >
+              <p 
+                className="mb-3 flex items-center gap-2"
+                style={{ color: "var(--p-text-muted)", fontSize: "0.85rem" }}
+              >
+                <Terminal className="w-4 h-4" style={{ color: "var(--p-accent)" }} />
+                Daily Linux Workstation
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {linuxStack.map((item, index) => (
+                  <motion.div
+                    key={item.label}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                    transition={{ delay: 1.1 + index * 0.05 }}
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    className="flex items-center gap-2 px-3 py-2 rounded-lg"
+                    style={{
+                      background: "var(--p-bg-card)",
+                      border: "1px solid var(--p-border)",
+                    }}
+                  >
+                    <item.icon className="w-4 h-4" style={{ color: item.color }} />
+                    <span style={{ color: "var(--p-text)", fontSize: "0.8rem" }}>
+                      {item.label}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>
