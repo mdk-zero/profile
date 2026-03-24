@@ -134,24 +134,35 @@ export function Hero() {
             const seed = i * 137.508;
             const left = (seed % 100);
             const top = ((seed * 1.618) % 100);
-            const opacity = 0.1 + (i % 4) * 0.04;
+            const opacity = 0.4 + (i % 4) * 0.12;
             const duration = 4 + (i % 4);
             const delay = i % 3;
             const moveX = 10 + (i % 3) * 8;
+            const size = 1 + (i % 3) * 0.5;
+            const colors = [
+              "var(--p-accent)",
+              "#8b5cf6",
+              "#a78bfa",
+              "#6366f1",
+            ];
             return (
               <motion.div
                 key={i}
-                className="absolute w-0.5 h-0.5 rounded-full"
+                className="absolute rounded-full"
                 style={{
-                  background: "var(--p-accent)",
+                  background: colors[i % colors.length],
+                  boxShadow: `0 0 ${4 + (i % 4) * 2}px ${colors[i % colors.length]}`,
                   left: `${left}%`,
                   top: `${top}%`,
+                  width: `${size}px`,
+                  height: `${size}px`,
                   opacity,
                 }}
                 animate={{
                   y: [0, -20, 0],
                   x: [0, moveX, -moveX / 2, moveX / 3, 0],
-                  opacity: [opacity, opacity * 1.5, opacity],
+                  opacity: [opacity, Math.min(opacity * 1.8, 1), opacity],
+                  scale: [1, 1.3, 1],
                 }}
                 transition={{
                   duration,
