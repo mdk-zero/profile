@@ -12,7 +12,7 @@ const stats = [
 ];
 
 const linuxStack = [
-  { icon: SiArchlinux, label: "Arch Linux", color: "#1793D1" },
+  { icon: SiArchlinux, label: "Arch", color: "#1793D1" },
   { icon: SiFedora, label: "Fedora", color: "#51A2DA" },
   { icon: SiHyprland, label: "Hyprland", color: "#4ECDE6" },
   { icon: SiNeovim, label: "Neovim", color: "#57A64A" },
@@ -75,7 +75,7 @@ export function About() {
           className="text-center mb-16"
         >
           {/* Decorative line */}
-          <motion.div 
+          <motion.div
             className="w-16 h-1 mx-auto mb-6 rounded-full"
             style={{ background: "linear-gradient(90deg, #7c3aed, #8b5cf6)" }}
             initial={{ scaleX: 0 }}
@@ -138,7 +138,7 @@ export function About() {
                   ease: "easeInOut",
                 }}
               />
-              
+
               {/* Image container */}
               <motion.div
                 className="relative rounded-2xl overflow-hidden"
@@ -162,9 +162,9 @@ export function About() {
               {/* Decorative floating elements */}
               <motion.div
                 className="absolute -top-3 sm:-top-4 -left-3 sm:-left-4 w-6 sm:w-8 h-6 sm:h-8 rounded-lg border-2"
-                style={{ 
+                style={{
                   borderColor: "var(--p-accent)",
-                  opacity: 0.3 
+                  opacity: 0.3
                 }}
                 animate={{
                   rotate: [0, 360],
@@ -202,8 +202,8 @@ export function About() {
               </span>
             </h3>
 
-            <motion.p 
-              className="mb-4" 
+            <motion.p
+              className="mb-4"
               style={{ color: "var(--p-text-secondary)", lineHeight: 1.8 }}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -213,8 +213,8 @@ export function About() {
               scalable web applications. I enjoy creating seamless user experiences
               that combine beautiful design with secure development.
             </motion.p>
-            <motion.p 
-              className="mb-6" 
+            <motion.p
+              className="mb-6"
               style={{ color: "var(--p-text-secondary)", lineHeight: 1.8 }}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -234,7 +234,7 @@ export function About() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: 0.6 + index * 0.1 }}
-                  whileHover={{ 
+                  whileHover={{
                     scale: 1.02,
                     borderColor: "var(--p-accent-border)"
                   }}
@@ -245,7 +245,7 @@ export function About() {
                   }}
                 >
                   {/* Hover glow effect */}
-                  <div 
+                  <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     style={{
                       background: "linear-gradient(135deg, rgba(124, 58, 237, 0.1), transparent)",
@@ -270,7 +270,7 @@ export function About() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 1.0 }}
             >
-              <p 
+              <p
                 className="mb-3 flex items-center gap-2"
                 style={{ color: "var(--p-text-muted)", fontSize: "0.85rem" }}
               >

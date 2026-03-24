@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Mail, MapPin, Send, CheckCircle, Linkedin, Github, Facebook } from "lucide-react";
+import { Mail, MapPin, Send, CheckCircle, Github, Facebook } from "lucide-react";
 import { motion } from "motion/react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 
@@ -142,7 +142,6 @@ export function Contact() {
   const socials = [
     { icon: Facebook, label: "Facebook", href: "https://www.facebook.com/Linux.Sale.Adona" },
     { icon: Github, label: "GitHub", href: "https://github.com/itslinxad" },
-    { icon: Linkedin, label: "LinkedIn", href: "#" },
   ];
 
   const inputStyle = {
