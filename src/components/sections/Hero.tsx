@@ -346,7 +346,7 @@ export function Hero() {
               ease: "linear",
             }}
           >
-            Felman Eleponga
+            Linux Adona
           </motion.span>
         </motion.h1>
 
