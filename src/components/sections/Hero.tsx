@@ -17,13 +17,13 @@ function InteractiveShape({ position, scale, geometry, color }: { position: [num
   const draggingRef = useRef(false);
   const pointerIdRef = useRef<number | null>(null);
   const prevPosRef = useRef(new THREE.Vector3(...position));
-  
+
   useFrame((state, delta) => {
     if (meshRef.current) {
       if (draggingRef.current) {
         const mouse = state.pointer;
         targetRef.current.set(mouse.x * 5, mouse.y * 3, position[2]);
-        
+
         velocityRef.current.x = (targetRef.current.x - posRef.current.x) * 8;
         velocityRef.current.y = (targetRef.current.y - posRef.current.y) * 8;
       } else {
@@ -31,20 +31,20 @@ function InteractiveShape({ position, scale, geometry, color }: { position: [num
         velocityRef.current.y *= 0.92;
         velocityRef.current.z *= 0.92;
       }
-      
+
       posRef.current.x += velocityRef.current.x * delta;
       posRef.current.y += velocityRef.current.y * delta;
-      
+
       meshRef.current.position.copy(posRef.current);
-      
+
       const velMag = velocityRef.current.length();
       meshRef.current.rotation.x += velocityRef.current.y * 0.5;
       meshRef.current.rotation.y += velocityRef.current.x * 0.5;
       meshRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 2) * 0.1 + velMag * 0.2;
-      
+
       const targetScale = hovered ? scale * 1.3 : scale;
       meshRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
-      
+
       prevPosRef.current.copy(posRef.current);
     }
   });
@@ -346,7 +346,7 @@ export function Hero() {
               ease: "linear",
             }}
           >
-            Linux Adona
+            Felman Eleponga
           </motion.span>
         </motion.h1>
 
