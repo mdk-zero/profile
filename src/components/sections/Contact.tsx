@@ -1,86 +1,21 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Mail, MapPin, Send, CheckCircle, Github, Facebook } from "lucide-react";
+import { Mail, Github, Facebook, MapPin, Star, CheckCircle } from "lucide-react";
 import { motion } from "motion/react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-
 import { useTheme } from "@/components/ThemeProvider";
 
 const WEB3FORMS_SITE_KEY = "50b2fe65-b00b-4b9e-ad62-3ba471098be2";
 
 export function Contact() {
   const { theme } = useTheme();
-  const [form, setForm] = useState({ name: "", email: "", budget: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [captchaToken, setCaptchaToken] = useState("");
   const captchaRef = useRef<HCaptcha>(null);
-  const [exchangeRate, setExchangeRate] = useState<number | null>(null);
-
-  useEffect(() => {
-    const detectCurrency = () => {
-      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const isPhilippines = timezone.includes("Manila") || timezone.includes("Asia/Manila");
-      return isPhilippines ? "PHP" : "USD";
-    };
-
-    const fetchExchangeRate = async () => {
-      const currency = detectCurrency();
-      if (currency === "USD") {
-        setExchangeRate(1);
-        return;
-      }
-
-      try {
-        const response = await fetch(
-          "https://api.frankfurter.app/latest?from=USD&to=PHP"
-        );
-        const data = await response.json();
-        if (data.rates?.PHP) {
-          setExchangeRate(data.rates.PHP);
-        } else {
-          setExchangeRate(58);
-        }
-      } catch {
-        setExchangeRate(58);
-      }
-    };
-
-    fetchExchangeRate();
-  }, []);
-
-  const formatBudget = (usdAmount: number): string => {
-    if (exchangeRate === null) return `$${usdAmount.toLocaleString()}`;
-    const converted = usdAmount * exchangeRate;
-    if (exchangeRate === 1) return `$${usdAmount.toLocaleString()}`;
-
-    if (converted >= 1000000) {
-      return `₱${(converted / 1000000).toFixed(1)}M`;
-    } else if (converted >= 10000) {
-      return `₱${(converted / 1000).toFixed(0)}K`;
-    }
-    return `₱${Math.round(converted).toLocaleString()}`;
-  };
-
-  const getCurrencyLabel = () => {
-    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const isPhilippines = timezone.includes("Manila") || timezone.includes("Asia/Manila");
-    return isPhilippines ? "PHP" : "USD";
-  };
-
-  const budgetOptions = (() => {
-    const currency = getCurrencyLabel();
-    const format = (amount: number) => currency === "PHP" ? `${currency} ${amount.toLocaleString()}` : `$${amount.toLocaleString()}`;
-
-    return [
-      { label: `Below ${format(5000)}`, value: "below-5000" },
-      { label: `${format(5000)} - ${format(15000)}`, value: "5000-15000" },
-      { label: `${format(15000)} - ${format(50000)}`, value: "15000-50000" },
-      { label: `Above ${format(50000)}`, value: "above-50000" },
-    ];
-  })();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -96,21 +31,19 @@ export function Contact() {
     try {
       const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
       if (!accessKey) {
-        setError("Form not configured. Please contact via email.");
+        setError("Form not configured.");
         setLoading(false);
         return;
       }
 
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           access_key: accessKey,
           name: form.name,
           email: form.email,
-          budget: form.budget,
+          subject: form.subject,
           message: form.message,
           to: "linuxadona17@gmail.com",
           "h-captcha-response": captchaToken,
@@ -119,255 +52,225 @@ export function Contact() {
 
       if (response.ok) {
         setSubmitted(true);
-        setForm({ name: "", email: "", budget: "", message: "" });
+        setForm({ name: "", email: "", subject: "", message: "" });
         setCaptchaToken("");
         captchaRef.current?.resetCaptcha();
       } else {
-        setError("Something went wrong. Please try again.");
-        captchaRef.current?.resetCaptcha();
+        setError("Something went wrong.");
       }
     } catch {
-      setError("Something went wrong. Please try again.");
-      captchaRef.current?.resetCaptcha();
+      setError("Something went wrong.");
     }
-
     setLoading(false);
   };
 
-  const contactInfo = [
-    { icon: Mail, label: "Email", value: "linuxadona17@gmail.com", href: "mailto:linuxadona17@gmail.com" },
-    { icon: MapPin, label: "Location", value: "Balayan, Batangas, Philippines", href: "#" },
-  ];
-
-  const socials = [
-    { icon: Facebook, label: "Facebook", href: "https://www.facebook.com/Linux.Sale.Adona" },
-    { icon: Github, label: "GitHub", href: "https://github.com/itslinxad" },
-  ];
-
   const inputStyle = {
-    background: "var(--p-input-bg)",
-    border: "1px solid var(--p-input-border)",
+    background: "var(--p-bg)",
+    border: "1px solid var(--p-border)",
     color: "var(--p-text)",
-    fontSize: "0.9rem",
-    transition: "border-color 0.2s",
+    fontSize: "0.85rem",
+    fontFamily: "monospace",
   };
 
   return (
     <section
       id="contact"
-      className="py-24 px-6 transition-colors duration-300"
+      className="py-24 px-4 sm:px-6 transition-colors duration-300 font-mono"
       style={{ background: "var(--p-bg)" }}
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-4xl mx-auto">
+        {/* Terminal-style header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-10 rounded-lg overflow-hidden"
+          style={{
+            background: "var(--p-bg-alt)",
+            border: "1px solid var(--p-border)",
+          }}
         >
-          <p
-            className="mb-3"
-            style={{
-              color: "var(--p-accent)",
-              fontSize: "0.85rem",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-            }}
-          >
-            Let&apos;s work together
-          </p>
-          <h2
-            className="mb-4"
-            style={{
-              fontSize: "clamp(1.8rem, 4vw, 2.5rem)",
-              fontWeight: 700,
-              color: "var(--p-text)",
-              lineHeight: 1.2,
-              transition: "color 0.3s",
-            }}
-          >
-            Get In Touch
-          </h2>
-          <p style={{ color: "var(--p-text-muted)", maxWidth: 480, margin: "0 auto", fontSize: "0.9rem", lineHeight: 1.7 }}>
-            Have a project in mind? I&apos;d love to hear about it. Send me a message and
-            I&apos;ll get back to you within 24 hours.
-          </p>
+          <div className="flex items-center gap-2 px-4 py-2" style={{ background: "var(--p-accent-bg)", borderBottom: "1px solid var(--p-border)" }}>
+            <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#ef4444" }} />
+            <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#eab308" }} />
+            <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#22c55e" }} />
+            <span className="ml-2 text-xs" style={{ color: "var(--p-text-muted)" }}>~/contact — bash</span>
+          </div>
+          <div className="p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <span style={{ color: "var(--p-accent)" }}>❯</span>
+              <span style={{ color: "var(--p-accent)" }}>send mail --help</span>
+            </div>
+            <p style={{ color: "var(--p-text-muted)", fontSize: "0.8rem" }}>Send a message and I'll get back to you within 24 hours.</p>
+          </div>
         </motion.div>
 
-        <div className="grid lg:grid-cols-5 gap-8 lg:gap-10">
+        <div className="grid lg:grid-cols-5 gap-6">
+          {/* Contact info as terminal output */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-2"
+            className="lg:col-span-2 space-y-3"
           >
-            <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
-              {contactInfo.map(({ icon: Icon, label, value, href }) => (
+            <div className="rounded-lg p-4" style={{ background: "var(--p-bg-alt)", border: "1px solid var(--p-border)" }}>
+              <div className="flex items-center gap-2 mb-2">
+                <span style={{ color: "var(--p-accent)" }}>❯</span>
+                <span style={{ color: "var(--p-accent)" }}>echo $CONTACT_INFO</span>
+              </div>
+              <div className="space-y-3">
                 <a
-                  key={label}
-                  href={href}
-                  className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg sm:rounded-xl transition-all duration-200 block"
-                  style={{
-                    background: "var(--p-bg-card)",
-                    border: "1px solid var(--p-border)",
-                    boxShadow: "var(--p-card-shadow)",
-                  }}
+                  href="mailto:linuxadona17@gmail.com"
+                  className="flex items-center gap-3 p-2 rounded"
+                  style={{ background: "var(--p-bg-card)" }}
                 >
-                  <div
-                    className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{
-                      background: "var(--p-accent-bg)",
-                      border: "1px solid var(--p-accent-border)",
-                    }}
-                  >
-                    <Icon className="w-4 h-4" style={{ color: "var(--p-accent)" }} />
-                  </div>
-                  <div>
-                    <p style={{ color: "var(--p-text-muted)", fontSize: "0.75rem" }}>{label}</p>
-                    <p style={{ color: "var(--p-text-secondary)", fontSize: "0.9rem" }}>{value}</p>
-                  </div>
+                  <Mail className="w-4 h-4" style={{ color: "var(--p-accent)" }} />
+                  <span style={{ color: "var(--p-text-secondary)", fontSize: "0.8rem" }}>linuxadona17@gmail.com</span>
                 </a>
-              ))}
+                <div className="flex items-center gap-3 p-2" style={{ background: "var(--p-bg-card)" }}>
+                  <MapPin className="w-4 h-4" style={{ color: "var(--p-accent)" }} />
+                  <span style={{ color: "var(--p-text-secondary)", fontSize: "0.8rem" }}>Balayan, Batangas, PH</span>
+                </div>
+              </div>
             </div>
 
-            <p className="mb-3" style={{ color: "var(--p-text-muted)", fontSize: "0.8rem" }}>
-              Find me on
-            </p>
-            <div className="flex gap-3">
-              {socials.map(({ icon: Icon, label, href }) => (
+            {/* Social links */}
+            <div className="rounded-lg p-4" style={{ background: "var(--p-bg-alt)", border: "1px solid var(--p-border)" }}>
+              <div className="flex items-center gap-2 mb-3">
+                <span style={{ color: "var(--p-accent)" }}>❯</span>
+                <span style={{ color: "var(--p-accent)" }}>ls ./socials/</span>
+              </div>
+              <div className="flex gap-2">
                 <a
-                  key={label}
-                  href={href}
-                  className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+                  href="https://www.facebook.com/Linux.Sale.Adona"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-3 py-2 rounded"
                   style={{
                     background: "var(--p-bg-card)",
                     border: "1px solid var(--p-border)",
                     color: "var(--p-text-secondary)",
                   }}
                 >
-                  <Icon className="w-4 h-4" />
+                  <Facebook className="w-4 h-4" />
+                  <span style={{ fontSize: "0.75rem" }}>Facebook</span>
                 </a>
-              ))}
+                <a
+                  href="https://github.com/itslinxad"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-3 py-2 rounded"
+                  style={{
+                    background: "var(--p-bg-card)",
+                    border: "1px solid var(--p-border)",
+                    color: "var(--p-text-secondary)",
+                  }}
+                >
+                  <Github className="w-4 h-4" />
+                  <span style={{ fontSize: "0.75rem" }}>GitHub</span>
+                </a>
+              </div>
             </div>
           </motion.div>
 
+          {/* Form as terminal input */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
             className="lg:col-span-3"
           >
-            <div
-              className="p-5 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl"
-              style={{
-                background: "var(--p-bg-card)",
-                border: "1px solid var(--p-border)",
-                boxShadow: "var(--p-card-shadow)",
-              }}
-            >
+            <div className="rounded-lg p-5" style={{ background: "var(--p-bg-alt)", border: "1px solid var(--p-border)" }}>
               {submitted ? (
-                <div className="flex flex-col items-center justify-center py-12 text-center">
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                  >
-                    <CheckCircle className="w-16 h-16 mb-4" style={{ color: "var(--p-accent)" }} />
-                  </motion.div>
-                  <h3 style={{ color: "var(--p-text)", fontWeight: 600, marginBottom: 8 }}>Message Sent!</h3>
-                  <p style={{ color: "var(--p-text-muted)", fontSize: "0.9rem" }}>
-                    Thanks for reaching out. I&apos;ll get back to you within 24 hours.
+                <div className="text-center py-8">
+                  <div className="flex items-center justify-center gap-2 mb-4">
+                    <CheckCircle className="w-8 h-8" style={{ color: "#22c55e" }} />
+                    <span style={{ color: "var(--p-text)", fontSize: "1.2rem" }}>Message Sent!</span>
+                  </div>
+                  <p style={{ color: "var(--p-text-muted)", fontSize: "0.85rem", marginBottom: 16 }}>
+                    Thanks for reaching out. I&apos;ll get back to you soon.
                   </p>
                   <button
-                    onClick={() => {
-                      setSubmitted(false);
-                      setForm({ name: "", email: "", budget: "", message: "" });
-                    }}
-                    className="mt-6 px-5 py-2 rounded-lg transition-colors cursor-pointer"
+                    onClick={() => setSubmitted(false)}
+                    className="px-4 py-2 rounded"
                     style={{
                       background: "var(--p-accent-bg)",
                       color: "var(--p-accent)",
                       border: "1px solid var(--p-accent-border)",
-                      fontSize: "0.85rem",
+                      fontSize: "0.8rem",
                     }}
                   >
-                    Send another message
+                    Send another →
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  <div className="grid sm:grid-cols-2 gap-5">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="flex items-center gap-2 mb-4">
+                    <span style={{ color: "var(--p-accent)" }}>❯</span>
+                    <span style={{ color: "var(--p-accent)" }}>cat &lt; message.txt</span>
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                      <label style={{ color: "var(--p-text-secondary)", fontSize: "0.8rem", display: "block", marginBottom: 6 }}>
-                        Your Name *
+                      <label style={{ color: "var(--p-text-muted)", fontSize: "0.75rem", display: "block", marginBottom: 6 }}>
+                        # Name
                       </label>
                       <input
                         type="text"
                         required
-                        placeholder="John Smith"
+                        placeholder="Your name"
                         value={form.name}
                         onChange={(e) => setForm({ ...form, name: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl outline-none"
+                        className="w-full px-3 py-2.5 rounded-lg outline-none"
                         style={inputStyle}
                       />
                     </div>
                     <div>
-                      <label style={{ color: "var(--p-text-secondary)", fontSize: "0.8rem", display: "block", marginBottom: 6 }}>
-                        Email Address *
+                      <label style={{ color: "var(--p-text-muted)", fontSize: "0.75rem", display: "block", marginBottom: 6 }}>
+                        # Email
                       </label>
                       <input
                         type="email"
                         required
-                        placeholder="john@example.com"
+                        placeholder="your@email.com"
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl outline-none"
+                        className="w-full px-3 py-2.5 rounded-lg outline-none"
                         style={inputStyle}
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label style={{ color: "var(--p-text-secondary)", fontSize: "0.8rem", display: "block", marginBottom: 6 }}>
-                      Project Budget
+                    <label style={{ color: "var(--p-text-muted)", fontSize: "0.75rem", display: "block", marginBottom: 6 }}>
+                      # Subject
                     </label>
-                    <select
-                      value={form.budget}
-                      onChange={(e) => setForm({ ...form, budget: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl outline-none"
-                      style={{
-                        ...inputStyle,
-                        color: form.budget ? "var(--p-text)" : "var(--p-text-muted)",
-                      }}
-                    >
-                      <option value="" disabled>Select a budget range</option>
-                      {budgetOptions.map((option) => (
-                        <option key={option.value} value={option.value}>
-                          {option.label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label style={{ color: "var(--p-text-secondary)", fontSize: "0.8rem", display: "block", marginBottom: 6 }}>
-                      Message *
-                    </label>
-                    <textarea
-                      required
-                      rows={5}
-                      placeholder="Tell me about your project..."
-                      value={form.message}
-                      onChange={(e) => setForm({ ...form, message: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl outline-none resize-none"
+                    <input
+                      type="text"
+                      placeholder="What's this about?"
+                      value={form.subject}
+                      onChange={(e) => setForm({ ...form, subject: e.target.value })}
+                      className="w-full px-3 py-2.5 rounded-lg outline-none"
                       style={inputStyle}
                     />
                   </div>
 
-                  <div className="flex justify-center">
+                  <div>
+                    <label style={{ color: "var(--p-text-muted)", fontSize: "0.75rem", display: "block", marginBottom: 6 }}>
+                      # Message
+                    </label>
+                    <textarea
+                      required
+                      rows={4}
+                      placeholder="Tell me about your project..."
+                      value={form.message}
+                      onChange={(e) => setForm({ ...form, message: e.target.value })}
+                      className="w-full px-3 py-2.5 rounded-lg outline-none resize-none"
+                      style={inputStyle}
+                    />
+                  </div>
+
+                  <div className="flex justify-center pt-2">
                     <HCaptcha
                       ref={captchaRef}
                       sitekey={WEB3FORMS_SITE_KEY}
@@ -381,35 +284,24 @@ export function Contact() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-4 rounded-xl text-white flex items-center justify-center gap-2 transition-all duration-200 hover:opacity-90 active:scale-95 disabled:opacity-60 cursor-pointer"
+                    className="w-full py-3 rounded-lg flex items-center justify-center gap-2"
                     style={{
-                      background: loading
-                        ? "rgba(124, 58, 237, 0.5)"
-                        : "linear-gradient(135deg, #7c3aed, #4f46e5)",
-                      boxShadow: "0 0 24px var(--p-accent-glow)",
-                      fontSize: "0.9rem",
-                      border: "none",
+                      background: loading ? "var(--p-accent-bg)" : "var(--p-accent)",
+                      color: "#fff",
+                      fontSize: "0.85rem",
                     }}
                   >
                     {loading ? (
-                      <>
-                        <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-                        </svg>
-                        Sending...
-                      </>
+                      <span style={{ color: "var(--p-accent)" }}>Sending...</span>
                     ) : (
                       <>
-                        <Send className="w-4 h-4" />
-                        Send Message
+                        <span>$</span> Send Message
                       </>
                     )}
                   </button>
+
                   {error && (
-                    <p className="text-center text-sm" style={{ color: "#ef4444" }}>
-                      {error}
-                    </p>
+                    <p className="text-center text-sm" style={{ color: "#ef4444" }}>{error}</p>
                   )}
                 </form>
               )}

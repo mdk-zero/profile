@@ -110,22 +110,22 @@ export function Hero() {
           transition={{ duration: 0.5 }}
           className="rounded-lg overflow-hidden"
           style={{
-            background: "rgba(10, 10, 15, 0.95)",
-            border: "1px solid rgba(139, 92, 246, 0.3)",
-            boxShadow: "0 0 40px rgba(139, 92, 246, 0.15)",
+            background: "var(--p-bg-alt)",
+            border: "1px solid var(--p-accent-border)",
+            boxShadow: "var(--p-card-shadow)",
           }}
         >
           {/* Terminal header */}
           <div
             className="flex items-center gap-2 px-4 py-2"
-            style={{ background: "rgba(139, 92, 246, 0.15)" }}
+            style={{ background: "var(--p-accent-bg)" }}
           >
             <div className="w-3 h-3 rounded-full" style={{ background: "#ef4444" }} />
             <div className="w-3 h-3 rounded-full" style={{ background: "#eab308" }} />
             <div className="w-3 h-3 rounded-full" style={{ background: "#22c55e" }} />
             <span
               className="ml-2 text-sm font-mono"
-              style={{ color: "rgba(255,255,255,0.5)" }}
+              style={{ color: "var(--p-text-muted)" }}
             >
               ~/portfolio — zsh
             </span>
@@ -144,8 +144,8 @@ export function Hero() {
               >
                 {line.type === "loading" && (
                   <div className="flex items-center gap-2">
-                    <span style={{ color: "#fbbf24" }}>●</span>
-                    <span style={{ color: "#94a3b8" }}>{line.text}</span>
+                    <span style={{ color: "var(--p-accent)" }}>●</span>
+                    <span style={{ color: "var(--p-text-secondary)" }}>{line.text}</span>
                   </div>
                 )}
                 {line.type === "success" && (
@@ -160,9 +160,9 @@ export function Hero() {
                 )}
                 {line.type === "progress" && (
                   <div className="flex flex-col gap-1">
-                    <span style={{ color: "#94a3b8" }}>{line.text}</span>
+                    <span style={{ color: "var(--p-text-secondary)" }}>{line.text}</span>
                     <div className="flex items-center gap-2">
-                      <span style={{ color: "#fbbf24" }}>[</span>
+                      <span style={{ color: "var(--p-accent)" }}>[</span>
                       <span style={{ color: "#22c55e", fontSize: "0.85em" }}>
                         {(() => {
                           const filled = Math.round(progress / 2.5);
@@ -170,13 +170,13 @@ export function Hero() {
                           return "▓".repeat(filled) + "░".repeat(empty) + ` ${progress}%`;
                         })()}
                       </span>
-                      <span style={{ color: "#fbbf24" }}>]</span>
+                      <span style={{ color: "var(--p-accent)" }}>]</span>
                     </div>
                   </div>
                 )}
                 {line.type === "info" && (
                   <div className="flex items-center gap-2">
-                    <span style={{ color: "#e2e8f0" }}>{line.text}</span>
+                    <span style={{ color: "var(--p-text)" }}>{line.text}</span>
                   </div>
                 )}
               </motion.div>
@@ -191,40 +191,40 @@ export function Hero() {
               >
                 {/* Prompt */}
                 <div className="flex items-center gap-2 mt-4 mb-2">
-                  <span className="text-lg" style={{ color: "#a78bfa" }}>❯</span>
-                  <span style={{ color: "#8b5cf6" }}>whoami</span>
+                  <span className="text-lg" style={{ color: "var(--p-accent)" }}>❯</span>
+                  <span style={{ color: "var(--p-accent)" }}>whoami</span>
                 </div>
 
                 {/* Output */}
                 <div className="pl-6 mb-4">
-                  <span style={{ color: "#e2e8f0" }}>Linux Adona — Full Stack Developer</span>
+                  <span style={{ color: "var(--p-text)" }}>Linux Adona — Full Stack Developer</span>
                 </div>
 
                 {/* Prompt again */}
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-lg" style={{ color: "#a78bfa" }}>❯</span>
-                  <span style={{ color: "#8b5cf6" }}>cat skills.txt</span>
+                  <span className="text-lg" style={{ color: "var(--p-accent)" }}>❯</span>
+                  <span style={{ color: "var(--p-accent)" }}>cat skills.txt</span>
                 </div>
 
                 {/* Skills output */}
                 <div className="pl-6 mb-4">
-                  <div style={{ color: "#94a3b8" }}>
+                  <div style={{ color: "var(--p-text-secondary)" }}>
                     <span style={{ color: "#22c55e" }}>PHP</span> • <span style={{ color: "#22c55e" }}>TypeScript</span> • <span style={{ color: "#22c55e" }}>React</span>
                   </div>
-                  <div style={{ color: "#94a3b8" }}>
+                  <div style={{ color: "var(--p-text-secondary)" }}>
                     <span style={{ color: "#22c55e" }}>Node.js</span> • <span style={{ color: "#22c55e" }}>Next.js</span> • <span style={{ color: "#22c55e" }}>Python</span>
                   </div>
                 </div>
 
                 {/* Prompt again */}
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-lg" style={{ color: "#a78bfa" }}>❯</span>
-                  <span style={{ color: "#8b5cf6" }}>echo "Hello, World."</span>
+                  <span className="text-lg" style={{ color: "var(--p-accent)" }}>❯</span>
+                  <span style={{ color: "var(--p-accent)" }}>echo "Hello, World."</span>
                 </div>
 
                 {/* Echo output */}
                 <div className="pl-6 mb-6">
-                  <span style={{ color: "#e2e8f0" }}>{"Hello, World."}</span>
+                  <span style={{ color: "var(--p-text)" }}>{"Hello, World."}</span>
                 </div>
 
                 {/* Links */}
@@ -235,13 +235,13 @@ export function Hero() {
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 px-3 py-2 rounded transition-all duration-300"
                     style={{
-                      background: "rgba(139, 92, 246, 0.1)",
-                      border: "1px solid rgba(139, 92, 246, 0.3)",
-                      color: "#a78bfa",
+                      background: "var(--p-accent-bg)",
+                      border: "1px solid var(--p-accent-border)",
+                      color: "var(--p-accent)",
                     }}
                     whileHover={{
-                      background: "rgba(139, 92, 246, 0.2)",
-                      borderColor: "rgba(139, 92, 246, 0.5)",
+                      background: "var(--p-accent-bg)",
+                      borderColor: "var(--p-accent-border-strong)",
                     }}
                   >
                     <Github className="w-4 h-4" />
@@ -254,13 +254,13 @@ export function Hero() {
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 px-3 py-2 rounded transition-all duration-300"
                     style={{
-                      background: "rgba(139, 92, 246, 0.1)",
-                      border: "1px solid rgba(139, 92, 246, 0.3)",
-                      color: "#a78bfa",
+                      background: "var(--p-accent-bg)",
+                      border: "1px solid var(--p-accent-border)",
+                      color: "var(--p-accent)",
                     }}
                     whileHover={{
-                      background: "rgba(139, 92, 246, 0.2)",
-                      borderColor: "rgba(139, 92, 246, 0.5)",
+                      background: "var(--p-accent-bg)",
+                      borderColor: "var(--p-accent-border-strong)",
                     }}
                   >
                     <FaFacebookF className="w-4 h-4" />
@@ -270,13 +270,13 @@ export function Hero() {
                   <motion.button
                     className="flex items-center gap-2 px-3 py-2 rounded transition-all duration-300"
                     style={{
-                      background: "rgba(139, 92, 246, 0.1)",
-                      border: "1px solid rgba(139, 92, 246, 0.3)",
-                      color: "#a78bfa",
+                      background: "var(--p-accent-bg)",
+                      border: "1px solid var(--p-accent-border)",
+                      color: "var(--p-accent)",
                     }}
                     whileHover={{
-                      background: "rgba(139, 92, 246, 0.2)",
-                      borderColor: "rgba(139, 92, 246, 0.5)",
+                      background: "var(--p-accent-bg)",
+                      borderColor: "var(--p-accent-border-strong)",
                     }}
                   >
                     <Download className="w-4 h-4" />
@@ -286,10 +286,10 @@ export function Hero() {
 
                 {/* Cursor */}
                 <div className="mt-6 flex items-center gap-2">
-                  <span className="text-lg" style={{ color: "#a78bfa" }}>❯</span>
+                  <span className="text-lg" style={{ color: "var(--p-accent)" }}>❯</span>
                   <motion.span
                     className="w-2 h-4 inline-block"
-                    style={{ background: "#a78bfa" }}
+                    style={{ background: "var(--p-accent)" }}
                     animate={{ opacity: [1, 0, 1] }}
                     transition={{ duration: 0.8, repeat: Infinity }}
                   />

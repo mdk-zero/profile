@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
-import { Globe, Cpu, Palette, ArrowRight } from "lucide-react";
+import { Globe, Cpu, Palette } from "lucide-react";
 import {
   FaReact,
   FaGitAlt,
@@ -26,23 +26,23 @@ const services = [
   {
     title: "Web Development",
     icon: Globe,
-    description: "I build fast, responsive, and visually appealing  websites and web applications aligned to your needs.",
-    features: ["Custom Websites", "Web Applications", "Landing Pages", "E-commerce"],
-    iconColor: "#8b5cf6",
+    description: "Building fast, responsive, and visually appealing websites and web applications.",
+    command: "ls -la web-services/",
+    color: "#8b5cf6",
   },
   {
     title: "Arduino Projects",
     icon: Cpu,
-    description: "From prototypes to fully functional hardware solutions, I bring your electronic ideas to life.",
-    features: ["IoT Solutions", "Prototyping", "Sensor Integration", "Automation"],
-    iconColor: "#6366f1",
+    description: "From prototypes to fully functional hardware solutions.",
+    command: "./build-arduino --all",
+    color: "#6366f1",
   },
   {
     title: "UI/UX Design",
     icon: Palette,
-    description: "Creating intuitive and beautiful user interfaces that provide satisfactory experiences.",
-    features: ["Wireframing", "Prototyping", "User Research", "Design Systems"],
-    iconColor: "#a78bfa",
+    description: "Creating intuitive and beautiful user interfaces.",
+    command: "figma export design-system",
+    color: "#a78bfa",
   },
 ];
 
@@ -71,167 +71,102 @@ export function Skills() {
     <section
       ref={sectionRef}
       id="skills"
-      className="py-24 px-6 transition-colors duration-300 relative overflow-hidden"
+      className="py-24 px-4 sm:px-6 transition-colors duration-300 font-mono"
       style={{ background: "var(--p-bg)" }}
     >
-      {/* Background decorations */}
-      <motion.div
-        className="absolute top-20 left-0 w-96 h-96 rounded-full blur-[150px] pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, rgba(139, 92, 246, 0.08), transparent)",
-          opacity: isInView ? 1 : 0,
-        }}
-      />
-      <motion.div
-        className="absolute bottom-20 right-0 w-80 h-80 rounded-full blur-[120px] pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, rgba(99, 102, 241, 0.08), transparent)",
-          opacity: isInView ? 1 : 0,
-        }}
-      />
-
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-4xl mx-auto">
+        {/* Terminal-style header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.5 }}
+          className="mb-10 rounded-lg overflow-hidden"
+          style={{
+            background: "var(--p-bg-alt)",
+            border: "1px solid var(--p-border)",
+          }}
         >
-          <motion.div
-            className="w-16 h-1 mx-auto mb-6 rounded-full"
-            style={{ background: "linear-gradient(90deg, #7c3aed, #8b5cf6)" }}
-            initial={{ scaleX: 0 }}
-            animate={isInView ? { scaleX: 1 } : {}}
-          />
-          <p
-            className="mb-3"
-            style={{
-              color: "var(--p-accent)",
-              fontSize: "0.85rem",
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-            }}
-          >
-            What I offer
-          </p>
-          <h2
-            style={{
-              fontSize: "clamp(2rem, 5vw, 3rem)",
-              fontWeight: 700,
-              color: "var(--p-text)",
-            }}
-          >
-            Services I Provide
-          </h2>
-          <p className="mt-4 max-w-2xl mx-auto" style={{ color: "var(--p-text-muted)" }}>
-            I excel in creating solutions that combine functionality with aesthetics,
-            helping you bring your vision to reality.
-          </p>
+          <div className="flex items-center gap-2 px-4 py-2" style={{ background: "var(--p-accent-bg)", borderBottom: "1px solid var(--p-border)" }}>
+            <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#ef4444" }} />
+            <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#eab308" }} />
+            <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#22c55e" }} />
+            <span className="ml-2 text-xs" style={{ color: "var(--p-text-muted)" }}>~/services — bash</span>
+          </div>
+          <div className="p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <span style={{ color: "var(--p-accent)" }}>❯</span>
+              <span style={{ color: "var(--p-accent)" }}>cat services.txt</span>
+            </div>
+            <p style={{ color: "var(--p-text-muted)", fontSize: "0.8rem" }}>━━━ Services I Provide ━━━</p>
+          </div>
         </motion.div>
 
-        {/* Services Cards */}
-        <div className="grid md:grid-cols-3 gap-6 mb-20">
+        {/* Services as terminal blocks */}
+        <div className="grid md:grid-cols-3 gap-4 mb-12">
           {services.map((service, i) => (
             <motion.div
               key={service.title}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.1 + i * 0.15, duration: 0.3 }}
-              whileHover={{ y: -8, transition: { duration: 0.2 } }}
-              className="group relative p-8 rounded-2xl overflow-hidden"
+              transition={{ delay: 0.1 + i * 0.15, duration: 0.4 }}
+              className="rounded-lg p-5"
               style={{
-                background: "var(--p-bg-card)",
+                background: "var(--p-bg-alt)",
                 border: "1px solid var(--p-border)",
               }}
             >
-              {/* Gradient glow on hover */}
-              <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  background: `radial-gradient(circle at 50% 0%, ${service.iconColor}15, transparent 60%)`,
-                }}
-              />
-
-              {/* Icon */}
-              <motion.div
-                className="w-16 h-16 rounded-2xl mb-6 flex items-center justify-center relative"
-                style={{
-                  background: `${service.iconColor}15`,
-                  border: `1px solid ${service.iconColor}30`,
-                }}
-                whileHover={{ rotate: [0, -10, 10, 0] }}
-                transition={{ duration: 0.5 }}
-              >
-                <service.icon className="w-8 h-8" style={{ color: service.iconColor }} />
-              </motion.div>
-
-              {/* Title */}
-              <h3 className="text-xl font-bold mb-3" style={{ color: "var(--p-text)" }}>
-                {service.title}
-              </h3>
-
-              {/* Description */}
-              <p className="mb-6 text-sm leading-relaxed" style={{ color: "var(--p-text-muted)" }}>
+              <div className="flex items-center gap-2 mb-3">
+                <service.icon className="w-5 h-5" style={{ color: service.color }} />
+                <span style={{ color: "var(--p-text)", fontWeight: 600, fontSize: "0.9rem" }}>{service.title}</span>
+              </div>
+              <p style={{ color: "var(--p-text-muted)", fontSize: "0.75rem", lineHeight: 1.6, marginBottom: 12 }}>
                 {service.description}
               </p>
-
-              {/* Features */}
-              <div className="space-y-2">
-                {service.features.map((feature) => (
-                  <div key={feature} className="flex items-center gap-2">
-                    <div
-                      className="w-1.5 h-1.5 rounded-full"
-                      style={{ background: service.iconColor }}
-                    />
-                    <span className="text-sm" style={{ color: "var(--p-text-secondary)" }}>
-                      {feature}
-                    </span>
-                  </div>
-                ))}
+              <div className="flex items-center gap-2 pt-3" style={{ borderTop: "1px solid var(--p-border)" }}>
+                <span style={{ color: service.color, fontSize: "0.7rem" }}>$</span>
+                <span style={{ color: "var(--p-text-muted)", fontSize: "0.7rem" }}>{service.command}</span>
               </div>
-
-              {/* Arrow indicator */}
-              <motion.div
-                className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-300"
-                style={{ color: service.iconColor }}
-                whileHover={{ x: 5 }}
-              >
-                <ArrowRight className="w-5 h-5" />
-              </motion.div>
             </motion.div>
           ))}
         </div>
 
-        {/* Tech Stack */}
+        {/* Tech stack terminal */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.8 }}
-          className="text-center"
+          transition={{ delay: 0.6 }}
+          className="rounded-lg overflow-hidden"
+          style={{
+            background: "var(--p-bg-alt)",
+            border: "1px solid var(--p-border)",
+          }}
         >
-          <p className="mb-6 text-sm font-medium" style={{ color: "var(--p-text-muted)" }}>
-            Technologies I work with
-          </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {techStack.map((tech, i) => (
-              <motion.div
-                key={tech.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ delay: 0.9 + i * 0.05 }}
-                whileHover={{ scale: 1.1, y: -3 }}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl"
-                style={{
-                  background: "var(--p-bg-card)",
-                  border: "1px solid var(--p-border)",
-                }}
-              >
-                <tech.icon className="w-5 h-5" style={{ color: "var(--p-accent)" }} />
-                <span className="text-sm font-medium" style={{ color: "var(--p-text)" }}>
-                  {tech.name}
-                </span>
-              </motion.div>
-            ))}
+          <div className="flex items-center gap-2 px-4 py-2" style={{ background: "var(--p-accent-bg)", borderBottom: "1px solid var(--p-border)" }}>
+            <span className="text-xs" style={{ color: "var(--p-text-muted)" }}>~/tech-stack — bash</span>
+          </div>
+          <div className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span style={{ color: "var(--p-accent)" }}>❯</span>
+              <span style={{ color: "var(--p-accent)" }}>echo $STACK</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {techStack.map((tech, i) => (
+                <motion.div
+                  key={tech.name}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ delay: 0.7 + i * 0.03 }}
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded"
+                  style={{
+                    background: "var(--p-bg-card)",
+                    border: "1px solid var(--p-border)",
+                  }}
+                >
+                  <tech.icon className="w-3.5 h-3.5" style={{ color: "var(--p-accent)" }} />
+                  <span style={{ color: "var(--p-text-secondary)", fontSize: "0.75rem" }}>{tech.name}</span>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
