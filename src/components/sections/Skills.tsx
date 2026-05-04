@@ -5,8 +5,6 @@ import { useRef } from "react";
 import { Globe, Cpu, Palette, ArrowRight } from "lucide-react";
 import {
   FaReact,
-  FaNodeJs,
-  FaJs,
   FaGitAlt,
   FaFigma,
   FaJava,
@@ -15,7 +13,8 @@ import {
   SiNextdotjs,
   SiTypescript,
   SiMysql,
-  SiMongodb,
+  SiPostgresql,
+  SiSupabase,
   SiTailwindcss,
   SiPhp,
   SiLaravel,
@@ -51,15 +50,14 @@ const techStack = [
   { name: "React", icon: FaReact },
   { name: "Next.js", icon: SiNextdotjs },
   { name: "TypeScript", icon: SiTypescript },
-  { name: "JavaScript", icon: FaJs },
-  { name: "Node.js", icon: FaNodeJs },
   { name: "Python", icon: SiPython },
   { name: "Java", icon: FaJava },
   { name: "C++", icon: SiCplusplus },
   { name: "PHP", icon: SiPhp },
   { name: "Laravel", icon: SiLaravel },
   { name: "MySQL", icon: SiMysql },
-  { name: "MongoDB", icon: SiMongodb },
+  { name: "PostgreSQL", icon: SiPostgresql },
+  { name: "Supabase", icon: SiSupabase },
   { name: "Tailwind", icon: SiTailwindcss },
   { name: "Figma", icon: FaFigma },
   { name: "Git", icon: FaGitAlt },
@@ -126,8 +124,8 @@ export function Skills() {
             Services I Provide
           </h2>
           <p className="mt-4 max-w-2xl mx-auto" style={{ color: "var(--p-text-muted)" }}>
-            I specialize in creating digital solutions that combine functionality with aesthetics,
-            helping you bring your vision to life.
+            I excel in creating solutions that combine functionality with aesthetics,
+            helping you bring your vision to reality.
           </p>
         </motion.div>
 
