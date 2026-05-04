@@ -15,14 +15,14 @@ export function Footer() {
     >
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-2">
-          <span style={{ color: "var(--p-text-muted)", fontSize: "0.85rem" }}>
-            itslinxad
+          <span style={{ color: "var(--p-text-muted)", fontSize: "0.85rem", fontFamily: "var(--font-geist-mono)" }}>
+            mdk0
           </span>
         </div>
 
         <p
           className="flex items-center gap-1.5"
-          style={{ color: "var(--p-text-muted)", fontSize: "0.8rem" }}
+          style={{ color: "var(--p-text-muted)", fontSize: "0.8rem", fontFamily: "var(--font-geist-mono)" }}
         >
           © {year} Linux Adona
         </p>
@@ -40,7 +40,7 @@ export function Footer() {
                 const el = document.getElementById(link.id);
                 if (el) el.scrollIntoView({ behavior: "smooth" });
               }}
-              style={{ color: "var(--p-text-muted)", fontSize: "0.8rem", transition: "color 0.2s", background: "none", border: "none", cursor: "pointer" }}
+              style={{ color: "var(--p-text-muted)", fontSize: "0.8rem", transition: "color 0.2s", background: "none", border: "none", cursor: "pointer", fontFamily: "var(--font-geist-mono)" }}
             >
               {link.label}
             </button>

@@ -156,7 +156,7 @@ export function Contact() {
                   <span style={{ fontSize: "0.75rem" }}>Facebook</span>
                 </a>
                 <a
-                  href="https://github.com/itslinxad"
+                  href="https://github.com/mdk-zero"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 px-3 py-2 rounded"

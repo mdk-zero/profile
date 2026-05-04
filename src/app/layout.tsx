@@ -60,7 +60,7 @@ export default function RootLayout({
         figtree.variable,
         geistSans.variable,
         geistMono.variable,
-        "font-sans"
+        "font-mono"
       )}>
         <ThemeProvider>
           <AppProvider>

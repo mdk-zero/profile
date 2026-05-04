@@ -230,7 +230,7 @@ export function Hero() {
                 {/* Links */}
                 <div className="flex gap-4 pl-6 flex-wrap">
                   <motion.a
-                    href="https://www.github.com/itslinxad/"
+                    href="https://www.github.com/mdk-zero/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 px-3 py-2 rounded transition-all duration-300"

@@ -39,8 +39,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           className="w-full h-full object-cover"
         />
         {/* Overlay with project number */}
-        <div className="absolute top-2 left-2 px-2 py-1 rounded text-xs" style={{ 
-          background: "var(--p-accent-bg)", 
+        <div className="absolute top-2 left-2 px-2 py-1 rounded text-xs" style={{
+          background: "var(--p-accent-bg)",
           color: "var(--p-accent)",
           border: "1px solid var(--p-accent-border)"
         }}>
@@ -48,8 +48,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </div>
         {/* Featured badge */}
         {project.featured && (
-          <div className="absolute top-2 right-2 px-3 py-1.5 rounded flex items-center gap-1.5 text-xs" style={{ 
-            background: "#22c55e", 
+          <div className="absolute top-2 right-2 px-3 py-1.5 rounded flex items-center gap-1.5 text-xs" style={{
+            background: "#22c55e",
             color: "#fff"
           }}>
             <Star className="w-3.5 h-3.5" />
@@ -88,11 +88,11 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           <span style={{ color: "var(--p-accent)" }}>❯</span>
           <span style={{ color: "var(--p-accent)", fontWeight: 600, fontSize: "0.9rem" }}>./{project.title.toLowerCase().replace(/\s+/g, '-')}</span>
         </div>
-        
+
         <p style={{ color: "var(--p-text-muted)", fontSize: "0.8rem", lineHeight: 1.6, marginBottom: 12 }}>
           {project.description}
         </p>
-        
+
         {/* Tags as installed packages */}
         <div className="flex flex-wrap gap-1.5 mt-auto">
           {project.tags.map((tag) => (
@@ -167,7 +167,7 @@ export function ProjectsClient({ projects }: { projects: Project[] }) {
           className="text-center"
         >
           <a
-            href="https://www.github.com/itslinxad?tab=repositories"
+            href="https://www.github.com/mdk-zero?tab=repositories"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg"
             style={{
               background: "var(--p-accent-bg)",

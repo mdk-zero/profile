@@ -63,19 +63,20 @@ export function Navbar() {
           className="flex items-center gap-2 cursor-pointer group"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className="w-8 h-8 group-hover:scale-110 transition-transform duration-300" style={{ filter: "drop-shadow(0 0 6px rgba(255, 255, 255, 0.3))" }}>
-            <circle cx="16" cy="16" r="15" fill="#0a0a0f"/>
-            <polygon points="24,20 10,20 10,10" fill="white"/>
+            <circle cx="16" cy="16" r="15" fill="#0a0a0f" />
+            <polygon points="24,20 10,20 10,10" fill="white" />
           </svg>
-          <span 
-            style={{ 
-              color: "var(--p-logo-text)", 
-              fontWeight: 700, 
-              fontSize: "1.1rem", 
-              transition: "color 0.3s" 
+          <span
+            style={{
+              color: "var(--p-logo-text)",
+              fontWeight: 700,
+              fontSize: "1.1rem",
+              transition: "color 0.3s",
+              fontFamily: "var(--font-geist-mono)"
             }}
             className="group-hover:text-[var(--p-accent)] transition-colors duration-300 hidden sm:block"
           >
-            itslinxad
+            mdk-zer0
           </span>
         </button>
       </div>
@@ -128,11 +129,12 @@ export function Navbar() {
                 whileHover={{ scale: 1.1, x: -4 }}
                 transition={{ duration: 0.15 }}
               >
-                <motion.span 
+                <motion.span
                   className="text-sm font-medium block"
-                  style={{ 
+                  style={{
                     color: isActive ? "var(--p-accent)" : "var(--p-text-secondary)",
                     textShadow: isActive ? "0 0 20px var(--p-accent)" : "none",
+                    fontFamily: "var(--font-geist-mono)",
                   }}
                   animate={{
                     fontSize: isActive ? "1.25rem" : "1rem",
@@ -157,9 +159,8 @@ export function Navbar() {
 
       {/* Mobile menu with slide animation */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-500 ease-out fixed top-16 left-0 right-0 z-40 ${
-          isOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
-        }`}
+        className={`md:hidden overflow-hidden transition-all duration-500 ease-out fixed top-16 left-0 right-0 z-40 ${isOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
+          }`}
       >
         <div
           className="mx-4 p-4 flex flex-col gap-3 rounded-xl"
@@ -179,14 +180,15 @@ export function Navbar() {
                   background: isActive ? "var(--p-accent-bg)" : "transparent",
                   color: isActive ? "var(--p-accent)" : "var(--p-text-secondary)",
                   border: isActive ? "1px solid var(--p-accent-border)" : "1px solid transparent",
+                  fontFamily: "var(--font-geist-mono)",
                 }}
                 whileHover={{ scale: 1.02, x: 4 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ duration: 0.1 }}
               >
-                <span 
+                <span
                   className="w-1.5 h-1.5 rounded-full transition-all duration-300"
-                  style={{ 
+                  style={{
                     background: isActive ? "var(--p-accent)" : "transparent",
                     boxShadow: isActive ? "0 0 8px var(--p-accent)" : "none",
                   }}
