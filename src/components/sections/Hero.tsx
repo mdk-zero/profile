@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { Github, Download } from "lucide-react";
 import { FaFacebookF } from "react-icons/fa";
 import { motion, useScroll, useTransform } from "motion/react";
+import { useAppContext } from "@/components/AppContext";
 
 interface StartupLine {
   text: string;
@@ -19,6 +20,7 @@ export function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll();
   const startedRef = useRef(false);
+  const { setStartupComplete } = useAppContext();
 
   const contentY = useTransform(scrollYProgress, [0, 0.5], [0, 50]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
@@ -54,6 +56,7 @@ export function Hero() {
       }
       await new Promise(resolve => setTimeout(resolve, 400));
       setShowMain(true);
+      setStartupComplete(true);
     };
 
     runStartup();
@@ -173,7 +176,6 @@ export function Hero() {
                 )}
                 {line.type === "info" && (
                   <div className="flex items-center gap-2">
-                    <span style={{ color: "#60a5fa" }}>ℹ</span>
                     <span style={{ color: "#e2e8f0" }}>{line.text}</span>
                   </div>
                 )}

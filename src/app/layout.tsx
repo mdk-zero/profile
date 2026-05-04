@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import AnimationReset from "@/components/AnimationReset";
 import { LayoutWrapper } from "@/components/LayoutWrapper";
+import { AppProvider } from "@/components/AppContext";
 
 const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -62,11 +63,13 @@ export default function RootLayout({
         "font-sans"
       )}>
         <ThemeProvider>
-          <AnimationReset>
-            <LayoutWrapper>
-              {children}
-            </LayoutWrapper>
-          </AnimationReset>
+          <AppProvider>
+            <AnimationReset>
+              <LayoutWrapper>
+                {children}
+              </LayoutWrapper>
+            </AnimationReset>
+          </AppProvider>
         </ThemeProvider>
       </body>
     </html>

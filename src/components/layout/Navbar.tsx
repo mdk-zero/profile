@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { motion } from "motion/react";
 import { useTheme } from "@/components/ThemeProvider";
+import { useAppContext } from "@/components/AppContext";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -17,6 +18,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const { theme, toggleTheme } = useTheme();
+  const { startupComplete } = useAppContext();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,6 +47,10 @@ export function Navbar() {
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
+
+  if (!startupComplete) {
+    return null;
+  }
 
   return (
     <>
