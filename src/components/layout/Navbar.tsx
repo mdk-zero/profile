@@ -10,6 +10,7 @@ const navLinks = [
   { label: "About", href: "#about" },
   { label: "Services", href: "#skills" },
   { label: "Projects", href: "#projects" },
+  { label: "Certificates", href: "#certificates" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -55,14 +56,17 @@ export function Navbar() {
   return (
     <>
       {/* Logo - visible on top left */}
-      <div
-        className="fixed top-6 left-6 z-50"
-      >
+      <div className="fixed top-6 left-6 z-50">
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="flex items-center gap-2 cursor-pointer group"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className="w-8 h-8 group-hover:scale-110 transition-transform duration-300" style={{ filter: "drop-shadow(0 0 6px rgba(255, 255, 255, 0.3))" }}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 32 32"
+            className="w-8 h-8 group-hover:scale-110 transition-transform duration-300"
+            style={{ filter: "drop-shadow(0 0 6px rgba(255, 255, 255, 0.3))" }}
+          >
             <circle cx="16" cy="16" r="15" fill="#0a0a0f" />
             <polygon points="24,20 10,20 10,10" fill="white" />
           </svg>
@@ -72,7 +76,7 @@ export function Navbar() {
               fontWeight: 700,
               fontSize: "1.1rem",
               transition: "color 0.3s",
-              fontFamily: "var(--font-geist-mono)"
+              fontFamily: "var(--font-geist-mono)",
             }}
             className="group-hover:text-[var(--p-accent)] transition-colors duration-300 hidden sm:block"
           >
@@ -100,11 +104,7 @@ export function Navbar() {
           className="w-9 h-9 md:hidden rounded-lg flex items-center justify-center cursor-pointer"
           style={{ color: "var(--p-text)" }}
         >
-          {isOpen ? (
-            <X className="w-5 h-5" />
-          ) : (
-            <Menu className="w-5 h-5" />
-          )}
+          {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>
 
@@ -159,8 +159,9 @@ export function Navbar() {
 
       {/* Mobile menu with slide animation */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-500 ease-out fixed top-16 left-0 right-0 z-40 ${isOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
-          }`}
+        className={`md:hidden overflow-hidden transition-all duration-500 ease-out fixed top-16 left-0 right-0 z-40 ${
+          isOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
+        }`}
       >
         <div
           className="mx-4 p-4 flex flex-col gap-3 rounded-xl"

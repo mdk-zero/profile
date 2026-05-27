@@ -3,11 +3,11 @@
 import { Terminal } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
-import { SiFedora, SiNeovim, SiZsh } from "react-icons/si";
+import { SiArchlinux, SiNeovim, SiZsh } from "react-icons/si";
 import { VscTerminalBash } from "react-icons/vsc";
 
 const linuxStack = [
-  { icon: SiFedora, label: "Fedora", color: "#51A2DA" },
+  { icon: SiArchlinux, label: "Arch Linux", color: "#1793D1" },
   { icon: SiNeovim, label: "Neovim", color: "#57A64A" },
   { icon: Terminal, label: "Ghostty", color: "#8B5CF6" },
   { icon: SiZsh, label: "Zsh", color: "#4ADE80" },
@@ -37,18 +37,25 @@ export function About() {
             border: "1px solid var(--p-border)",
           }}
         >
-          <div className="flex items-center gap-2 px-4 py-2" style={{ background: "var(--p-accent-bg)", borderBottom: "1px solid var(--p-border)" }}>
+          <div
+            className="flex items-center gap-2 px-4 py-2"
+            style={{ background: "var(--p-accent-bg)", borderBottom: "1px solid var(--p-border)" }}
+          >
             <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#ef4444" }} />
             <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#eab308" }} />
             <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#22c55e" }} />
-            <span className="ml-2 text-xs" style={{ color: "var(--p-text-muted)" }}>~/about — bash</span>
+            <span className="ml-2 text-xs" style={{ color: "var(--p-text-muted)" }}>
+              ~/about — bash
+            </span>
           </div>
           <div className="p-4">
             <div className="flex items-center gap-2 mb-2">
               <span style={{ color: "var(--p-accent)" }}>❯</span>
               <span style={{ color: "var(--p-accent)" }}>whoami</span>
             </div>
-            <p style={{ color: "var(--p-text)", fontSize: "0.9rem" }}>Linux Adona — Full Stack Developer</p>
+            <p style={{ color: "var(--p-text)", fontSize: "0.9rem" }}>
+              Linux Adona — Full Stack Developer
+            </p>
           </div>
         </motion.div>
 
@@ -60,10 +67,13 @@ export function About() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="relative"
           >
-            <div className="rounded-lg overflow-hidden" style={{
-              background: "var(--p-bg-alt)",
-              border: "1px solid var(--p-border)",
-            }}>
+            <div
+              className="rounded-lg overflow-hidden"
+              style={{
+                background: "var(--p-bg-alt)",
+                border: "1px solid var(--p-border)",
+              }}
+            >
               <img
                 src="profile-pic.jpg"
                 alt="Profile"
@@ -92,51 +102,67 @@ export function About() {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             {/* Bio block */}
-            <div className="rounded-lg p-5 mb-6" style={{
-              background: "var(--p-bg-alt)",
-              border: "1px solid var(--p-border)",
-            }}>
+            <div
+              className="rounded-lg p-5 mb-6"
+              style={{
+                background: "var(--p-bg-alt)",
+                border: "1px solid var(--p-border)",
+              }}
+            >
               <div className="flex items-center gap-2 mb-3">
                 <span style={{ color: "var(--p-accent)" }}>❯</span>
                 <span style={{ color: "var(--p-accent)" }}>cat bio.txt</span>
               </div>
               <p style={{ color: "var(--p-text-secondary)", fontSize: "0.85rem", lineHeight: 1.8 }}>
-                Passionate full-stack developer with ~2 years of experience building scalable web applications. 
-                I enjoy creating seamless user experiences that combine beautiful design with secure development.
+                Passionate full-stack developer with ~2 years of experience building scalable web
+                applications. I enjoy creating seamless user experiences that combine beautiful
+                design with secure development.
               </p>
             </div>
 
             {/* Stats block */}
-            <div className="rounded-lg p-5 mb-6" style={{
-              background: "var(--p-bg-alt)",
-              border: "1px solid var(--p-border)",
-            }}>
+            <div
+              className="rounded-lg p-5 mb-6"
+              style={{
+                background: "var(--p-bg-alt)",
+                border: "1px solid var(--p-border)",
+              }}
+            >
               <div className="flex items-center gap-2 mb-4">
                 <span style={{ color: "var(--p-accent)" }}>❯</span>
                 <span style={{ color: "var(--p-accent)" }}>du -sh experience/</span>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center p-3 rounded" style={{ background: "var(--p-bg-card)" }}>
-                  <span style={{ color: "var(--p-accent)", fontSize: "1.5rem", fontWeight: 700 }}>2+</span>
+                  <span style={{ color: "var(--p-accent)", fontSize: "1.5rem", fontWeight: 700 }}>
+                    2+
+                  </span>
                   <p style={{ color: "var(--p-text-muted)", fontSize: "0.7rem" }}>Years</p>
                 </div>
                 <div className="text-center p-3 rounded" style={{ background: "var(--p-bg-card)" }}>
-                  <span style={{ color: "var(--p-accent)", fontSize: "1.5rem", fontWeight: 700 }}>15+</span>
+                  <span style={{ color: "var(--p-accent)", fontSize: "1.5rem", fontWeight: 700 }}>
+                    15+
+                  </span>
                   <p style={{ color: "var(--p-text-muted)", fontSize: "0.7rem" }}>Projects</p>
                 </div>
               </div>
             </div>
 
             {/* Linux stack block */}
-            <div className="rounded-lg p-5" style={{
-              background: "var(--p-bg-alt)",
-              border: "1px solid var(--p-border)",
-            }}>
+            <div
+              className="rounded-lg p-5"
+              style={{
+                background: "var(--p-bg-alt)",
+                border: "1px solid var(--p-border)",
+              }}
+            >
               <div className="flex items-center gap-2 mb-3">
                 <span style={{ color: "var(--p-accent)" }}>❯</span>
                 <span style={{ color: "var(--p-accent)" }}>neofetch</span>
               </div>
-              <p style={{ color: "var(--p-text-muted)", fontSize: "0.75rem", marginBottom: 12 }}>Daily Linux Workstation:</p>
+              <p style={{ color: "var(--p-text-muted)", fontSize: "0.75rem", marginBottom: 12 }}>
+                Daily Linux Workstation:
+              </p>
               <div className="flex flex-wrap gap-2">
                 {linuxStack.map((item, index) => (
                   <motion.div
@@ -151,7 +177,9 @@ export function About() {
                     }}
                   >
                     <item.icon className="w-3.5 h-3.5" style={{ color: item.color }} />
-                    <span style={{ color: "var(--p-text-secondary)", fontSize: "0.75rem" }}>{item.label}</span>
+                    <span style={{ color: "var(--p-text-secondary)", fontSize: "0.75rem" }}>
+                      {item.label}
+                    </span>
                   </motion.div>
                 ))}
               </div>
@@ -162,3 +190,4 @@ export function About() {
     </section>
   );
 }
+

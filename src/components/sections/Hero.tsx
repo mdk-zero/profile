@@ -43,18 +43,18 @@ export function Hero() {
     const runStartup = async () => {
       for (let i = 0; i < startupSequence.length; i++) {
         if (startupSequence[i].type === "progress") {
-          setStartupLines(prev => [...prev, startupSequence[i]]);
+          setStartupLines((prev) => [...prev, startupSequence[i]]);
           setProgress(0);
           for (let p = 0; p <= 100; p += 5) {
-            await new Promise(resolve => setTimeout(resolve, 80));
+            await new Promise((resolve) => setTimeout(resolve, 80));
             setProgress(p);
           }
         } else {
-          await new Promise(resolve => setTimeout(resolve, startupSequence[i].duration || 500));
-          setStartupLines(prev => [...prev, startupSequence[i]]);
+          await new Promise((resolve) => setTimeout(resolve, startupSequence[i].duration || 500));
+          setStartupLines((prev) => [...prev, startupSequence[i]]);
         }
       }
-      await new Promise(resolve => setTimeout(resolve, 400));
+      await new Promise((resolve) => setTimeout(resolve, 400));
       setShowMain(true);
       setStartupComplete(true);
     };
@@ -123,10 +123,7 @@ export function Hero() {
             <div className="w-3 h-3 rounded-full" style={{ background: "#ef4444" }} />
             <div className="w-3 h-3 rounded-full" style={{ background: "#eab308" }} />
             <div className="w-3 h-3 rounded-full" style={{ background: "#22c55e" }} />
-            <span
-              className="ml-2 text-sm font-mono"
-              style={{ color: "var(--p-text-muted)" }}
-            >
+            <span className="ml-2 text-sm font-mono" style={{ color: "var(--p-text-muted)" }}>
               ~/portfolio — zsh
             </span>
           </div>
@@ -191,7 +188,9 @@ export function Hero() {
               >
                 {/* Prompt */}
                 <div className="flex items-center gap-2 mt-4 mb-2">
-                  <span className="text-lg" style={{ color: "var(--p-accent)" }}>❯</span>
+                  <span className="text-lg" style={{ color: "var(--p-accent)" }}>
+                    ❯
+                  </span>
                   <span style={{ color: "var(--p-accent)" }}>whoami</span>
                 </div>
 
@@ -202,23 +201,31 @@ export function Hero() {
 
                 {/* Prompt again */}
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-lg" style={{ color: "var(--p-accent)" }}>❯</span>
+                  <span className="text-lg" style={{ color: "var(--p-accent)" }}>
+                    ❯
+                  </span>
                   <span style={{ color: "var(--p-accent)" }}>cat skills.txt</span>
                 </div>
 
                 {/* Skills output */}
                 <div className="pl-6 mb-4">
                   <div style={{ color: "var(--p-text-secondary)" }}>
-                    <span style={{ color: "#22c55e" }}>PHP</span> • <span style={{ color: "#22c55e" }}>TypeScript</span> • <span style={{ color: "#22c55e" }}>React</span>
+                    <span style={{ color: "#22c55e" }}>PHP</span> •{" "}
+                    <span style={{ color: "#22c55e" }}>TypeScript</span> •{" "}
+                    <span style={{ color: "#22c55e" }}>React</span>
                   </div>
                   <div style={{ color: "var(--p-text-secondary)" }}>
-                    <span style={{ color: "#22c55e" }}>Node.js</span> • <span style={{ color: "#22c55e" }}>Next.js</span> • <span style={{ color: "#22c55e" }}>Python</span>
+                    <span style={{ color: "#22c55e" }}>Node.js</span> •{" "}
+                    <span style={{ color: "#22c55e" }}>Next.js</span> •{" "}
+                    <span style={{ color: "#22c55e" }}>Python</span>
                   </div>
                 </div>
 
                 {/* Prompt again */}
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-lg" style={{ color: "var(--p-accent)" }}>❯</span>
+                  <span className="text-lg" style={{ color: "var(--p-accent)" }}>
+                    ❯
+                  </span>
                   <span style={{ color: "var(--p-accent)" }}>echo "Hello, World."</span>
                 </div>
 
@@ -267,28 +274,30 @@ export function Hero() {
                     <span>Facebook</span>
                   </motion.a>
 
-                   <motion.a
-                     href="/Resume.pdf"
-                     download
-                     className="flex items-center gap-2 px-3 py-2 rounded transition-all duration-300 cursor-pointer"
-                     style={{
-                       background: "var(--p-accent-bg)",
-                       border: "1px solid var(--p-accent-border)",
-                       color: "var(--p-accent)",
-                     }}
-                     whileHover={{
-                       background: "var(--p-accent-bg)",
-                       borderColor: "var(--p-accent-border-strong)",
-                     }}
-                   >
-                     <Download className="w-4 h-4" />
-                     <span>CV</span>
-                   </motion.a>
+                  <motion.a
+                    href="/Resume.pdf"
+                    download
+                    className="flex items-center gap-2 px-3 py-2 rounded transition-all duration-300 cursor-pointer"
+                    style={{
+                      background: "var(--p-accent-bg)",
+                      border: "1px solid var(--p-accent-border)",
+                      color: "var(--p-accent)",
+                    }}
+                    whileHover={{
+                      background: "var(--p-accent-bg)",
+                      borderColor: "var(--p-accent-border-strong)",
+                    }}
+                  >
+                    <Download className="w-4 h-4" />
+                    <span>CV</span>
+                  </motion.a>
                 </div>
 
                 {/* Cursor */}
                 <div className="mt-6 flex items-center gap-2">
-                  <span className="text-lg" style={{ color: "var(--p-accent)" }}>❯</span>
+                  <span className="text-lg" style={{ color: "var(--p-accent)" }}>
+                    ❯
+                  </span>
                   <motion.span
                     className="w-2 h-4 inline-block"
                     style={{ background: "var(--p-accent)" }}
