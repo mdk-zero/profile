@@ -267,21 +267,23 @@ export function Hero() {
                     <span>Facebook</span>
                   </motion.a>
 
-                  <motion.button
-                    className="flex items-center gap-2 px-3 py-2 rounded transition-all duration-300"
-                    style={{
-                      background: "var(--p-accent-bg)",
-                      border: "1px solid var(--p-accent-border)",
-                      color: "var(--p-accent)",
-                    }}
-                    whileHover={{
-                      background: "var(--p-accent-bg)",
-                      borderColor: "var(--p-accent-border-strong)",
-                    }}
-                  >
-                    <Download className="w-4 h-4" />
-                    <span>CV</span>
-                  </motion.button>
+                   <motion.a
+                     href="/Resume.pdf"
+                     download
+                     className="flex items-center gap-2 px-3 py-2 rounded transition-all duration-300 cursor-pointer"
+                     style={{
+                       background: "var(--p-accent-bg)",
+                       border: "1px solid var(--p-accent-border)",
+                       color: "var(--p-accent)",
+                     }}
+                     whileHover={{
+                       background: "var(--p-accent-bg)",
+                       borderColor: "var(--p-accent-border-strong)",
+                     }}
+                   >
+                     <Download className="w-4 h-4" />
+                     <span>CV</span>
+                   </motion.a>
                 </div>
 
                 {/* Cursor */}

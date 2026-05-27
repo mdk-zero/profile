@@ -1,0 +1,11 @@
+description: >-
+  Redesigned a legacy corporate website with a modern UI and improved UX,
+  reducing bounceprone navigation paths and integrating reCAPTCHA for spam-free
+  quote submissions.
+image: image.png
+tags:
+  - React
+  - TailwindCSS
+  - Javascript
+liveUrl: transglobalmovers.com
+featured: true
