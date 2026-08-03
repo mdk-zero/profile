@@ -27,6 +27,9 @@ export const metadata: Metadata = {
   },
 };
 
+// Applies the stored theme before first paint to avoid a flash of the wrong theme.
+// Must stay a raw inline <script> in <head> so it runs during HTML parse — next/script
+// with beforeInteractive defers inline code to the Next.js runtime, which paints first.
 function ThemeScript() {
   const script = `
     (function() {

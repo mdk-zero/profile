@@ -4,6 +4,16 @@ import { ProjectsClient } from "./ProjectsClient";
 
 type ImageValue = string | { src?: string } | null | undefined;
 
+// Keystatic stores whatever was typed, so bare domains ("example.com") are common.
+// Without a scheme the browser treats the href as a relative path and resolves it
+// against the current origin, so prefix https:// unless it is already absolute.
+function toAbsoluteUrl(url: string | null | undefined) {
+  const trimmed = url?.trim();
+  if (!trimmed || trimmed === "#") return "#";
+  if (/^(https?:\/\/|mailto:|tel:|\/)/i.test(trimmed)) return trimmed;
+  return `https://${trimmed}`;
+}
+
 async function getProjects() {
   const reader = createReader(process.cwd(), keystaticConfig);
   const projects = await reader.collections.projects.all();
@@ -25,8 +35,8 @@ async function getProjects() {
       description: project.entry.description || "",
       image: imagePath,
       tags: [...(project.entry.tags || [])],
-      liveUrl: project.entry.liveUrl || "#",
-      githubUrl: project.entry.sourceUrl || "#",
+      liveUrl: toAbsoluteUrl(project.entry.liveUrl),
+      githubUrl: toAbsoluteUrl(project.entry.sourceUrl),
       featured: project.entry.featured || false,
     };
   });

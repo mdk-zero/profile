@@ -1,0 +1,12 @@
+description: >-
+  My very own capstone project in my university. This application is tailored
+  for nursing students who wants to have a modern and digital environment of
+  learning.
+image: image.png
+tags:
+  - Next.js
+  - Supabase
+liveUrl: i-care.dev
+sourceUrl: github.com/mdk-zero/icare
+featured: true
+publishedAt: 2026-08-03
