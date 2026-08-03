@@ -3,12 +3,7 @@
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import { Globe, Cpu, Palette } from "lucide-react";
-import {
-  FaReact,
-  FaGitAlt,
-  FaFigma,
-  FaJava,
-} from "react-icons/fa";
+import { FaReact, FaGitAlt, FaFigma, FaJava } from "react-icons/fa";
 import {
   SiNextdotjs,
   SiTypescript,
@@ -86,18 +81,25 @@ export function Skills() {
             border: "1px solid var(--p-border)",
           }}
         >
-          <div className="flex items-center gap-2 px-4 py-2" style={{ background: "var(--p-accent-bg)", borderBottom: "1px solid var(--p-border)" }}>
+          <div
+            className="flex items-center gap-2 px-4 py-2"
+            style={{ background: "var(--p-accent-bg)", borderBottom: "1px solid var(--p-border)" }}
+          >
             <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#ef4444" }} />
             <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#eab308" }} />
             <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#22c55e" }} />
-            <span className="ml-2 text-xs" style={{ color: "var(--p-text-muted)" }}>~/services — bash</span>
+            <span className="ml-2 text-xs" style={{ color: "var(--p-text-muted)" }}>
+              ~/services — bash
+            </span>
           </div>
           <div className="p-4">
             <div className="flex items-center gap-2 mb-2">
               <span style={{ color: "var(--p-accent)" }}>❯</span>
               <span style={{ color: "var(--p-accent)" }}>cat services.txt</span>
             </div>
-            <p style={{ color: "var(--p-text-muted)", fontSize: "0.8rem" }}>━━━ Services I Provide ━━━</p>
+            <p style={{ color: "var(--p-text-muted)", fontSize: "0.8rem" }}>
+              ━━━ Services I Provide ━━━
+            </p>
           </div>
         </motion.div>
 
@@ -109,22 +111,38 @@ export function Skills() {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.1 + i * 0.15, duration: 0.4 }}
-              className="rounded-lg p-5"
+              className="flex flex-col justify-between rounded-lg p-5"
               style={{
                 background: "var(--p-bg-alt)",
                 border: "1px solid var(--p-border)",
               }}
             >
-              <div className="flex items-center gap-2 mb-3">
-                <service.icon className="w-5 h-5" style={{ color: service.color }} />
-                <span style={{ color: "var(--p-text)", fontWeight: 600, fontSize: "0.9rem" }}>{service.title}</span>
+              <div className="flex flex-col">
+                <div className="flex items-center gap-2 mb-3">
+                  <service.icon className="w-5 h-5" style={{ color: service.color }} />
+                  <span style={{ color: "var(--p-text)", fontWeight: 600, fontSize: "0.9rem" }}>
+                    {service.title}
+                  </span>
+                </div>
+                <p
+                  style={{
+                    color: "var(--p-text-muted)",
+                    fontSize: "0.75rem",
+                    lineHeight: 1.6,
+                    marginBottom: 12,
+                  }}
+                >
+                  {service.description}
+                </p>
               </div>
-              <p style={{ color: "var(--p-text-muted)", fontSize: "0.75rem", lineHeight: 1.6, marginBottom: 12 }}>
-                {service.description}
-              </p>
-              <div className="flex items-center gap-2 pt-3" style={{ borderTop: "1px solid var(--p-border)" }}>
+              <div
+                className="flex items-center gap-2 pt-3"
+                style={{ borderTop: "1px solid var(--p-border)" }}
+              >
                 <span style={{ color: service.color, fontSize: "0.7rem" }}>$</span>
-                <span style={{ color: "var(--p-text-muted)", fontSize: "0.7rem" }}>{service.command}</span>
+                <span style={{ color: "var(--p-text-muted)", fontSize: "0.7rem" }}>
+                  {service.command}
+                </span>
               </div>
             </motion.div>
           ))}
@@ -141,8 +159,13 @@ export function Skills() {
             border: "1px solid var(--p-border)",
           }}
         >
-          <div className="flex items-center gap-2 px-4 py-2" style={{ background: "var(--p-accent-bg)", borderBottom: "1px solid var(--p-border)" }}>
-            <span className="text-xs" style={{ color: "var(--p-text-muted)" }}>~/tech-stack — bash</span>
+          <div
+            className="flex items-center gap-2 px-4 py-2"
+            style={{ background: "var(--p-accent-bg)", borderBottom: "1px solid var(--p-border)" }}
+          >
+            <span className="text-xs" style={{ color: "var(--p-text-muted)" }}>
+              ~/tech-stack — bash
+            </span>
           </div>
           <div className="p-4">
             <div className="flex items-center gap-2 mb-3">
@@ -163,7 +186,9 @@ export function Skills() {
                   }}
                 >
                   <tech.icon className="w-3.5 h-3.5" style={{ color: "var(--p-accent)" }} />
-                  <span style={{ color: "var(--p-text-secondary)", fontSize: "0.75rem" }}>{tech.name}</span>
+                  <span style={{ color: "var(--p-text-secondary)", fontSize: "0.75rem" }}>
+                    {tech.name}
+                  </span>
                 </motion.div>
               ))}
             </div>
