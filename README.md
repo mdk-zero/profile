@@ -1,91 +1,94 @@
-# Portfolio Website
+# Linux Adona
 
-A personal portfolio website built with Next.js, TailwindCSS, shadcn/ui, and Keystatic CMS.
+**Full Stack Developer** — Balayan, Batangas, PH
 
-## Features
+Passionate full-stack developer with ~2 years of experience building scalable web
+applications. I enjoy creating seamless user experiences that combine beautiful design
+with secure development.
 
-- **Hero Section** - Eye-catching introduction with social links
-- **About Section** - Personal bio and details
-- **Skills Section** - Showcase your skills by category
-- **Projects Section** - Display your work with images and links
-- **Services Section** - Highlight services you offer for commissions
-- **Blog Section** - Share your thoughts and tutorials
-- **Contact Section** - Contact form for inquiries
+- 📧 [linuxadona17@gmail.com](mailto:linuxadona17@gmail.com)
+- 🐙 [github.com/mdk-zero](https://github.com/mdk-zero)
+- 💬 [Facebook](https://www.facebook.com/Linux.Sale.Adona)
+- 📄 [Résumé](public/Resume.pdf)
+
+---
 
 ## Tech Stack
 
-- **Framework**: Next.js 16 (App Router)
-- **Styling**: TailwindCSS + shadcn/ui
-- **CMS**: Keystatic (file-based, Git-backed)
-- **Deployment**: Vercel
+**Languages** — TypeScript, Python, Java, C++, PHP
 
-## Getting Started
+**Frontend** — React, Next.js, Tailwind CSS
 
-### Prerequisites
+**Backend & Data** — Laravel, MySQL, PostgreSQL, Supabase
 
-- Node.js 18+
-- npm/yarn/pnpm
+**Tools** — Git, Figma
 
-### Installation
+**Daily Linux workstation** — Arch Linux, Neovim, Ghostty, Zsh, Bash
 
-```bash
-npm install
-```
+---
 
-### Development
+## What I Do
 
-```bash
-npm run dev
-```
+| Service | Description |
+| --- | --- |
+| **Web Development** | Building fast, responsive, and visually appealing websites and web applications. |
+| **Arduino Projects** | From prototypes to fully functional hardware solutions. |
+| **UI/UX Design** | Creating intuitive and beautiful user interfaces. |
 
-Open [http://localhost:3000](http://localhost:3000) to view the site.
+---
 
-### CMS Admin
+## Projects
 
-Access the Keystatic admin panel at [http://localhost:3000/keystatic](http://localhost:3000/keystatic) to manage content.
+### iCARE++
+My capstone project at university — an application tailored for nursing students who want
+a modern, digital learning environment.
+<br>`Next.js` `Supabase` — [Live](https://i-care.dev) · [Source](https://github.com/mdk-zero/icare)
 
-## Project Structure
+### Gatherly — Event Management System
+A centralized platform for event managers and venue owners for planning an event, with an
+AI chatbot, real-time analytics, and interactive charts.
+<br>`PHP` `JavaScript` `MySQL` `Python` — [Live](https://gather-ly.app) · [Source](https://github.com/mdk-zero/Gatherly)
 
-```
-src/
-├── app/
-│   ├── page.tsx          # Main homepage
-│   ├── layout.tsx        # Root layout with navbar/footer
-│   ├── keystatic/        # CMS admin panel
-│   └── api/keystatic/    # CMS API routes
-├── components/
-│   ├── layout/           # Navbar, Footer
-│   └── sections/         # Page sections (Hero, About, etc.)
-├── content/
-│   ├── projects/         # Project content
-│   ├── skills/           # Skills data
-│   ├── services/         # Services data
-│   ├── blog/             # Blog posts
-│   └── profile/          # Profile info
-└── lib/
-    └── utils.ts          # Utility functions
-```
+### Coffee Shop POS and Inventory Management
+A point of sale system for coffee orders with intelligent inventory management, real-time
+analytics, and reporting.
+<br>`PHP` `JavaScript` `MySQL` — [Live](https://broscafe.store) · [Source](https://github.com/mdk-zero/Bros-Cafe)
 
-## Customization
+### Tuy Government Website
+Built a custom CMS for a municipal government site, enabling non-technical staff to manage
+content and downloadable forms without developer intervention.
+<br>`React` `TypeScript` `MySQL` `Git` — [Live](https://tuybatangas.gov.ph)
 
-1. **Update Profile**: Edit `src/content/profile/main.json`
-2. **Add Projects**: Add new `.mdoc` files to `src/content/projects/`
-3. **Update Skills**: Add new `.json` files to `src/content/skills/`
-4. **Add Services**: Edit existing or add new files to `src/content/services/`
-5. **Write Blog Posts**: Add new `.mdoc` files to `src/content/blog/`
+### Transglobal Movers Website
+Redesigned a legacy corporate website with a modern UI and improved UX, reducing
+bounce-prone navigation paths and integrating reCAPTCHA for spam-free quote submissions.
+<br>`React` `TailwindCSS` `JavaScript` — [Live](https://transglobalmovers.com)
 
-## Deployment
+---
 
-### Vercel (Recommended)
+## Certifications
 
-1. Push your code to GitHub
-2. Import to Vercel
-3. Deploy
+**Networking & Infrastructure**
+- CCNA: Switching, Routing and Wireless Essentials
+- Introduction to Packet Tracer
+- ITS — Device Configuration and Management
+- IoT Cybersecurity Webinar
 
-For production CMS editing, configure GitHub storage mode in `keystatic.config.ts`.
+**AI & Data**
+- AI Fundamentals with IBM SkillsBuild
+- Introduction to Modern AI
+- Apply AI — Analyze Customer Reviews
+- Introduction to Data Science
+- Data Analytics Essentials
+- ITS — Data Analytics
+- ITS — Databases
 
-## Learn More
+**Professional**
+- Microsoft Office Specialist
+- English for IT 1
+- English for IT 2
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [shadcn/ui Documentation](https://ui.shadcn.com)
-- [Keystatic Documentation](https://keystatic.com/docs)
+---
+
+<sub>This repository hosts the source for my personal portfolio site, built with Next.js,
+Tailwind CSS, and Keystatic.</sub>
