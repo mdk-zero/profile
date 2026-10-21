@@ -333,23 +333,34 @@
     --flip: 180deg;
   }
 
-  .photocard-inner {
-    position: relative;
-    aspect-ratio: 55 / 85;
+  /* Two layers so each motion keeps its own timing: the tilt layer rests askew and follows
+     the pointer; the inner layer only flips. */
+  .photocard-tilt {
     cursor: pointer;
     transform-style: preserve-3d;
-    transform: rotate(var(--rest)) rotateX(var(--rx, 0deg)) rotateY(calc(var(--ry, 0deg) + var(--flip)));
+    transform: rotate(var(--rest)) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
     transition: transform 650ms cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
   /* While following the pointer, respond quickly instead of easing for 650ms. */
-  .photocard[data-tracking] .photocard-inner {
+  .photocard[data-tracking] .photocard-tilt {
     transition-duration: 150ms;
+  }
+
+  /* A symmetric ease-in-out, so the card is edge-on at exactly half the duration, the
+     moment the faces swap below (250ms of 500ms). Keep the two numbers in step. */
+  .photocard-inner {
+    position: relative;
+    aspect-ratio: 55 / 85;
+    transform-style: preserve-3d;
+    transform: rotateY(var(--flip));
+    transition: transform 500ms cubic-bezier(0.45, 0, 0.55, 1);
   }
 
   .photocard-face {
     position: absolute;
     inset: 0;
+    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     border: 1px solid rgb(0 0 0 / 0.08);
     background: #fafafa;
@@ -357,25 +368,39 @@
     box-shadow:
       0 1px 2px rgb(0 0 0 / 0.08),
       0 22px 44px -16px rgb(0 0 0 / 0.35);
+    /* Swap which face is shown at the half-turn, when the card is edge-on. Browsers that
+       flatten the 3D context ignore backface-visibility, and would otherwise keep showing
+       the front, mirrored, after a flip. */
+    transition: visibility 0s linear 250ms;
   }
 
   .photocard-back {
     transform: rotateY(180deg);
+    visibility: hidden;
   }
 
+  .photocard[data-flipped] .photocard-front {
+    visibility: hidden;
+  }
+
+  .photocard[data-flipped] .photocard-back {
+    visibility: visible;
+  }
+
+  /* Plain transparency, no blend mode: a blended descendant can force the browser to
+     flatten the card's 3D context, which breaks the flip. */
   .photocard-sheen {
     position: absolute;
     inset: 0;
     pointer-events: none;
     background:
-      radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgb(255 255 255 / 0.5), transparent 45%),
-      linear-gradient(115deg, transparent 35%, rgb(23 147 209 / 0.16) 48%, rgb(255 255 255 / 0.3) 52%, transparent 65%);
-    mix-blend-mode: soft-light;
+      radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgb(255 255 255 / 0.22), transparent 45%),
+      linear-gradient(115deg, transparent 38%, rgb(23 147 209 / 0.08) 48%, rgb(255 255 255 / 0.14) 52%, transparent 62%);
     opacity: 0;
     transition: opacity 300ms ease-out;
   }
 
-  .photocard[data-tracking] .photocard-sheen {
+  .photocard[data-tracking]:not([data-flipped]) .photocard-sheen {
     opacity: 1;
   }
 
@@ -404,7 +429,9 @@
     .btn,
     .link,
     .example-link,
+    .photocard-tilt,
     .photocard-inner,
+    .photocard-face,
     .photocard-sheen {
       transition: none;
     }

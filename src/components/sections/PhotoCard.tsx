@@ -30,9 +30,9 @@ export function PhotoCard({ name, handle, role, photo, details, footer }: PhotoC
     const box = card.getBoundingClientRect();
     const x = (e.clientX - box.left) / box.width;
     const y = (e.clientY - box.top) / box.height;
-    // Tilt toward the pointer; turned over, the horizontal tilt mirrors so it still follows.
+    // Tilt toward the pointer. The tilt layer sits outside the flip, so this holds on both sides.
     card.style.setProperty("--rx", `${(0.5 - y) * 12}deg`);
-    card.style.setProperty("--ry", `${(x - 0.5) * (flipped ? -14 : 14)}deg`);
+    card.style.setProperty("--ry", `${(x - 0.5) * 14}deg`);
     card.style.setProperty("--mx", `${x * 100}%`);
     card.style.setProperty("--my", `${y * 100}%`);
     card.setAttribute("data-tracking", "");
@@ -56,51 +56,53 @@ export function PhotoCard({ name, handle, role, photo, details, footer }: PhotoC
         onPointerMove={onPointerMove}
         onPointerLeave={onPointerLeave}
       >
-        <div className="photocard-inner" onClick={() => setFlipped((f) => !f)}>
-          <div className="photocard-face flex flex-col p-3" aria-hidden={flipped}>
-            <div className="relative flex-1 overflow-hidden bg-[#e5e5e5]">
-              <Image
-                src={photo.src}
-                alt={photo.alt}
-                fill
-                preload
-                sizes="(min-width: 640px) 27rem, 22rem"
-                className="object-cover object-[50%_30%]"
-                draggable={false}
-              />
-              <div className="photocard-sheen" aria-hidden="true" />
-            </div>
-            <div className="flex items-end justify-between gap-3 px-1 pt-3 pb-0.5">
-              <div className="min-w-0">
-                <p className="font-display text-xl leading-tight font-bold tracking-[-0.02em]">{name}</p>
-                <p className="mt-0.5 text-sm text-[#5c5c5c]">{role}</p>
+        <div className="photocard-tilt" onClick={() => setFlipped((f) => !f)}>
+          <div className="photocard-inner">
+            <div className="photocard-face photocard-front flex flex-col p-3" aria-hidden={flipped}>
+              <div className="relative flex-1 overflow-hidden bg-[#e5e5e5]">
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  preload
+                  sizes="(min-width: 640px) 27rem, 22rem"
+                  className="object-cover object-[50%_30%]"
+                  draggable={false}
+                />
+                <div className="photocard-sheen" aria-hidden="true" />
               </div>
-              <span aria-hidden="true" className="icon h-8 w-[1.53rem]" style={logoStyle} />
-            </div>
-          </div>
-
-          <div className="photocard-face photocard-back flex flex-col p-6" aria-hidden={!flipped}>
-            <div className="flex items-center gap-3">
-              <span aria-hidden="true" className="icon h-10 w-[1.9rem]" style={logoStyle} />
-              <div>
-                <p className="font-display text-2xl leading-none font-bold">{handle}</p>
-                <p className="mt-1 text-sm text-[#5c5c5c]">{name}</p>
-              </div>
-            </div>
-
-            <dl className="mt-7 grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-3 text-[0.9375rem] leading-snug">
-              {details.map((row) => (
-                <div key={row.label} className="contents">
-                  <dt className="text-[#5c5c5c]">{row.label}</dt>
-                  <dd className="font-medium">{row.value ?? <LocalTime />}</dd>
+              <div className="flex items-end justify-between gap-3 px-1 pt-3 pb-0.5">
+                <div className="min-w-0">
+                  <p className="font-display text-xl leading-tight font-bold tracking-[-0.02em]">{name}</p>
+                  <p className="mt-0.5 text-sm text-[#5c5c5c]">{role}</p>
                 </div>
-              ))}
-            </dl>
+                <span aria-hidden="true" className="icon h-8 w-[1.53rem]" style={logoStyle} />
+              </div>
+            </div>
 
-            <div className="mt-auto border-t border-black/10 pt-4 text-sm text-[#5c5c5c]">
-              {footer.map((line) => (
-                <p key={line}>{line}</p>
-              ))}
+            <div className="photocard-face photocard-back flex flex-col p-6" aria-hidden={!flipped}>
+              <div className="flex items-center gap-3">
+                <span aria-hidden="true" className="icon h-10 w-[1.9rem]" style={logoStyle} />
+                <div>
+                  <p className="font-display text-2xl leading-none font-bold">{handle}</p>
+                  <p className="mt-1 text-sm text-[#5c5c5c]">{name}</p>
+                </div>
+              </div>
+
+              <dl className="mt-7 grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-3 text-[0.9375rem] leading-snug">
+                {details.map((row) => (
+                  <div key={row.label} className="contents">
+                    <dt className="text-[#5c5c5c]">{row.label}</dt>
+                    <dd className="font-medium">{row.value ?? <LocalTime />}</dd>
+                  </div>
+                ))}
+              </dl>
+
+              <div className="mt-auto border-t border-black/10 pt-4 text-sm text-[#5c5c5c]">
+                {footer.map((line) => (
+                  <p key={line}>{line}</p>
+                ))}
+              </div>
             </div>
           </div>
         </div>
