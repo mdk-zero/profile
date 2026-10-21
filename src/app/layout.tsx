@@ -1,36 +1,33 @@
 import type { Metadata } from "next";
-import { Atkinson_Hyperlegible_Mono, VT323 } from "next/font/google";
+import { Red_Hat_Display, Red_Hat_Text } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { LayoutWrapper } from "@/components/LayoutWrapper";
 
-// Body face. The explicit fallback list sends glyphs the web font lacks (box drawing in
-// `tree` output) to system monospace faces instead of a metric-matched Arial. It also stops
-// Turbopack looking up precomputed fallback metrics, which it has none of for this font.
-const atkinsonMono = Atkinson_Hyperlegible_Mono({
+// Headings and body come from the Red Hat superfamily: open-source type from the Linux world.
+const display = Red_Hat_Display({
   subsets: ["latin"],
-  variable: "--font-atkinson-mono",
-  fallback: ["ui-monospace", "DejaVu Sans Mono", "Menlo", "Consolas", "monospace"],
-  adjustFontFallback: false,
+  variable: "--font-rh-display",
 });
 
-// Display face, used only for the name: a DEC terminal bitmap font, like a TTY at full size.
-const vt323 = VT323({
+const text = Red_Hat_Text({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-vt323",
+  variable: "--font-rh-text",
 });
 
 export const metadata: Metadata = {
-  title: "Profile | Linux Adona",
-  description: "Personal portfolio showcasing projects, skills, and services",
+  title: "Linux Adona | Full-stack web developer",
+  description:
+    "Linux Adona designs and builds websites and web apps for businesses, students and local government. Based in Balayan, Batangas, Philippines.",
   icons: {
-    icon: "/favicon.svg",
+    icon: { url: "/tab-logo.png", type: "image/png" },
+    apple: "/tab-logo.png",
   },
 };
 
-// Applies the stored theme before first paint to avoid a flash of the wrong theme.
+// Applies the theme before first paint to avoid a flash of the wrong theme: the visitor's
+// saved choice, otherwise their system setting (followed live until they pick one).
 // Must stay a raw inline <script> in <head> so it runs during HTML parse — next/script
 // with beforeInteractive defers inline code to the Next.js runtime, which paints first.
 // React 19 strips <html>'s attributes when it hydrates it, so the script also watches the
@@ -39,14 +36,25 @@ function ThemeScript() {
   const script = `
     (function() {
       var root = document.documentElement;
-      function applyStoredTheme() {
-        if (root.classList.contains('theme-dark') || root.classList.contains('theme-light')) return;
-        var theme = 'dark';
-        try { if (localStorage.getItem('portfolio-theme') === 'light') theme = 'light'; } catch (e) {}
-        root.classList.add('theme-' + theme);
+      var system = window.matchMedia('(prefers-color-scheme: dark)');
+      function stored() {
+        try {
+          var t = localStorage.getItem('portfolio-theme');
+          return t === 'light' || t === 'dark' ? t : null;
+        } catch (e) { return null; }
       }
-      applyStoredTheme();
-      new MutationObserver(applyStoredTheme).observe(root, { attributes: true, attributeFilter: ['class'] });
+      function preferred() { return stored() || (system.matches ? 'dark' : 'light'); }
+      function applyTheme() {
+        if (root.classList.contains('theme-dark') || root.classList.contains('theme-light')) return;
+        root.classList.add('theme-' + preferred());
+      }
+      applyTheme();
+      new MutationObserver(applyTheme).observe(root, { attributes: true, attributeFilter: ['class'] });
+      system.addEventListener('change', function() {
+        if (stored()) return;
+        root.classList.remove('theme-dark', 'theme-light');
+        applyTheme();
+      });
     })();
   `;
   return <script dangerouslySetInnerHTML={{ __html: script }} />;
@@ -67,7 +75,7 @@ export default function RootLayout({
       <head>
         <ThemeScript />
       </head>
-      <body className={cn("min-h-screen antialiased", atkinsonMono.variable, vt323.variable)}>
+      <body className={cn("min-h-screen", display.variable, text.variable)}>
         <ThemeProvider>
           <LayoutWrapper>{children}</LayoutWrapper>
         </ThemeProvider>

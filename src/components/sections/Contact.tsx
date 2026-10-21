@@ -1,53 +1,63 @@
-import { Breakable } from "@/components/terminal/Breakable";
-import { Panel } from "@/components/terminal/Panel";
+import { FaFacebook } from "react-icons/fa";
+import { Breakable } from "@/components/Breakable";
+import { Icon } from "@/components/Icon";
+import { site } from "@/lib/site";
 import { ContactForm } from "./ContactForm";
 
-const details = [
-  { key: "email", label: "linuxadona17@gmail.com", href: "mailto:linuxadona17@gmail.com" },
-  { key: "location", label: "Balayan, Batangas, PH" },
-  { key: "github", label: "github.com/mdk-zero", href: "https://github.com/mdk-zero" },
+const methods = [
+  { label: "Email", value: site.email, href: `mailto:${site.email}`, icon: <Icon name="mail" /> },
   {
-    key: "facebook",
-    label: "Linux.Sale.Adona",
-    href: "https://www.facebook.com/Linux.Sale.Adona",
+    label: "GitHub",
+    value: `github.com/${site.github.user}`,
+    href: site.github.url,
+    icon: <Icon name="github" />,
   },
-  { key: "résumé", label: "Resume.pdf", href: "/Resume.pdf", download: true },
+  ...(site.linkedin
+    ? [{ label: "LinkedIn", value: "LinkedIn", href: site.linkedin, icon: <Icon name="linkedin" /> }]
+    : []),
+  {
+    label: "Facebook",
+    value: "Linux.Sale.Adona",
+    href: site.facebook,
+    icon: <FaFacebook aria-hidden="true" className="size-[1.25em] shrink-0" />,
+  },
 ];
 
 export function Contact() {
   return (
-    <section id="contact" tabIndex={-1} aria-labelledby="contact-title" className="workspace">
-      <div className="grid gap-3 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)]">
-        <Panel title="send a message" titleId="contact-title">
-          <ContactForm />
-        </Panel>
+    <section id="contact" aria-labelledby="contact-title" className="page py-24 md:py-32">
+      <div className="grid gap-x-10 gap-y-14 lg:grid-cols-12">
+        <div className="lg:col-span-5">
+          <h2 id="contact-title" className="section-title">
+            Get in touch
+          </h2>
+          <p className="lead mt-6 max-w-[40ch]">
+            Tell me about your project and I’ll reply within 24 hours.
+          </p>
+          <p className="mt-4 text-muted">Based in {site.location}.</p>
 
-        <Panel title="contact info">
-          <dl className="kv">
-            {details.map((item) => (
-              <div key={item.key} className="contents">
-                <dt>{item.key}</dt>
-                <dd className="[overflow-wrap:anywhere]">
-                  {item.href ? (
-                    <a
-                      href={item.href}
-                      className="link"
-                      {...(item.download
-                        ? { download: true }
-                        : item.href.startsWith("http")
-                          ? { target: "_blank", rel: "noopener noreferrer" }
-                          : {})}
-                    >
-                      <Breakable text={item.label} />
-                    </a>
-                  ) : (
-                    item.label
-                  )}
-                </dd>
-              </div>
+          <ul className="mt-10 flex flex-col border-t border-rule">
+            {methods.map((m) => (
+              <li key={m.label} className="border-b border-rule">
+                <a
+                  href={m.href}
+                  {...(m.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="flex min-h-14 items-center gap-4 py-3 text-ink transition-colors hover:text-blue"
+                >
+                  {m.icon}
+                  <span className="w-20 shrink-0 text-base text-muted">{m.label}</span>
+                  <span className="min-w-0 [overflow-wrap:anywhere]">
+                    <Breakable text={m.value} />
+                  </span>
+                </a>
+              </li>
             ))}
-          </dl>
-        </Panel>
+          </ul>
+        </div>
+
+        <div className="lg:col-span-6 lg:col-start-7">
+          <ContactForm />
+        </div>
       </div>
     </section>
   );

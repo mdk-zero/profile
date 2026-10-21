@@ -41,10 +41,12 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   // A page restored from the back/forward cache may predate a theme change in another tab.
   useEffect(() => {
     const handlePageshow = () => {
+      let stored: string | null = null;
       try {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        applyTheme(stored === "light" ? "light" : "dark");
+        stored = localStorage.getItem(STORAGE_KEY);
       } catch {}
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      applyTheme(stored === "light" || stored === "dark" ? stored : system);
     };
 
     window.addEventListener("pageshow", handlePageshow);

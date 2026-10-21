@@ -1,169 +1,128 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useTransition } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { useTheme } from "@/components/ThemeProvider";
-import { Breakable } from "@/components/terminal/Breakable";
+import { sendMessage, type ContactResult } from "@/lib/actions/contact";
+import { cn } from "@/lib/utils";
 
-const WEB3FORMS_SITE_KEY = "50b2fe65-b00b-4b9e-ad62-3ba471098be2";
-const EMAIL = "linuxadona17@gmail.com";
+// Optional: set NEXT_PUBLIC_HCAPTCHA_SITE_KEY (and HCAPTCHA_SECRET on the server) to require a captcha.
+const CAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY;
 
-const emptyForm = { name: "", email: "", subject: "", message: "" };
+const emptyForm = { name: "", email: "", subject: "", message: "", company: "" };
 
-// Header fields read like composing mail in a terminal client: label, then value.
 const fieldClass =
-  "w-full border-0 border-b border-field bg-transparent px-0 py-1 text-fg caret-blue outline-none placeholder:text-dim focus:border-blue";
+  "mt-2 block w-full border border-field bg-transparent px-4 py-3 text-ink outline-none transition-colors placeholder:text-muted focus:border-blue focus-visible:outline-none aria-invalid:border-destructive";
 
 export function ContactForm() {
   const { theme } = useTheme();
   const [form, setForm] = useState(emptyForm);
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [result, setResult] = useState<ContactResult | null>(null);
   const [captchaToken, setCaptchaToken] = useState("");
+  const [pending, startTransition] = useTransition();
   const captchaRef = useRef<HCaptcha>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const update = (field: keyof typeof emptyForm) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setForm((f) => ({ ...f, [field]: e.target.value }));
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
-
-    if (!captchaToken) {
-      setError("Complete the captcha, then send again.");
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
-      if (!accessKey) {
-        setError(`The form isn't set up yet. Email me at ${EMAIL} instead.`);
-        setLoading(false);
-        return;
-      }
-
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          access_key: accessKey,
-          name: form.name,
-          email: form.email,
-          subject: form.subject,
-          message: form.message,
-          to: EMAIL,
-          "h-captcha-response": captchaToken,
-        }),
-      });
-
-      if (response.ok) {
-        setSubmitted(true);
+    startTransition(async () => {
+      const res = await sendMessage({ ...form, captchaToken });
+      setResult(res);
+      if (res.ok) {
         setForm(emptyForm);
         setCaptchaToken("");
         captchaRef.current?.resetCaptcha();
-      } else {
-        setError(`Your message didn't send. Try again, or email me at ${EMAIL}.`);
       }
-    } catch {
-      setError(`Your message didn't send. Check your connection and try again, or email me at ${EMAIL}.`);
-    }
-    setLoading(false);
+    });
   };
 
-  if (submitted) {
+  if (result?.ok) {
     return (
-      <div role="status">
-        <p className="font-bold text-fg">Message sent.</p>
-        <p className="mt-2">Thanks for reaching out. I&apos;ll reply by email within 24 hours.</p>
-        <button type="button" onClick={() => setSubmitted(false)} className="btn mt-8">
+      <div role="status" className="border border-rule p-8">
+        <p className="font-display text-2xl font-bold text-ink">Message sent.</p>
+        <p className="mt-3">Thanks for reaching out. I’ll reply by email within 24 hours.</p>
+        <button type="button" onClick={() => setResult(null)} className="btn btn-secondary mt-8">
           Write another message
         </button>
       </div>
     );
   }
 
+  const fieldError = result && !result.ok ? result.field : undefined;
+
   return (
-    <form onSubmit={handleSubmit}>
-      <p>I&apos;ll get back to you within 24 hours.</p>
-
-      <div className="mt-8 grid grid-cols-[7ch_minmax(0,1fr)] items-baseline gap-x-[1ch] gap-y-5 sm:gap-x-[2ch]">
-        <span className="text-dim">To</span>
-        <span className="[overflow-wrap:anywhere]">
-          <Breakable text={EMAIL} />
-        </span>
-
-        <label htmlFor="contact-name" className="text-dim">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+      <div className="grid gap-6 sm:grid-cols-2">
+        <label className="block text-base text-ink">
           Name
+          <input
+            type="text"
+            required
+            autoComplete="name"
+            value={form.name}
+            onChange={update("name")}
+            aria-invalid={fieldError === "name" || undefined}
+            className={fieldClass}
+          />
         </label>
-        <input
-          id="contact-name"
-          type="text"
-          required
-          autoComplete="name"
-          placeholder="Your name"
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-          className={fieldClass}
-        />
-
-        <label htmlFor="contact-email" className="text-dim">
+        <label className="block text-base text-ink">
           Email
+          <input
+            type="email"
+            required
+            autoComplete="email"
+            placeholder="you@example.com"
+            value={form.email}
+            onChange={update("email")}
+            aria-invalid={fieldError === "email" || undefined}
+            className={fieldClass}
+          />
         </label>
-        <input
-          id="contact-email"
-          type="email"
-          required
-          autoComplete="email"
-          placeholder="you@example.com"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-          className={fieldClass}
-        />
-
-        <label htmlFor="contact-subject" className="text-dim">
-          Subject
-        </label>
-        <input
-          id="contact-subject"
-          type="text"
-          placeholder="What's this about?"
-          value={form.subject}
-          onChange={(e) => setForm({ ...form, subject: e.target.value })}
-          className={fieldClass}
-        />
       </div>
 
-      <label htmlFor="contact-message" className="mt-8 block text-dim">
-        Message
+      <label className="block text-base text-ink">
+        Subject <span className="text-muted">(optional)</span>
+        <input type="text" value={form.subject} onChange={update("subject")} className={fieldClass} />
       </label>
-      <textarea
-        id="contact-message"
-        required
-        rows={6}
-        placeholder="Tell me about your project..."
-        value={form.message}
-        onChange={(e) => setForm({ ...form, message: e.target.value })}
-        className="mt-2 block w-full resize-y border border-field bg-transparent px-[1ch] py-2 text-fg caret-blue outline-none placeholder:text-dim focus:border-blue"
-      />
 
-      <div className="mt-6">
+      <label className="block text-base text-ink">
+        Message
+        <textarea
+          required
+          rows={6}
+          placeholder="What are you building, and when do you need it?"
+          value={form.message}
+          onChange={update("message")}
+          aria-invalid={fieldError === "message" || undefined}
+          className={cn(fieldClass, "resize-y")}
+        />
+      </label>
+
+      {/* Honeypot: off-screen and skipped by keyboard and screen readers; bots fill it in. */}
+      <label aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+        Company
+        <input type="text" tabIndex={-1} autoComplete="off" value={form.company} onChange={update("company")} />
+      </label>
+
+      {CAPTCHA_SITE_KEY && (
         <HCaptcha
           ref={captchaRef}
-          sitekey={WEB3FORMS_SITE_KEY}
-          reCaptchaCompat={false}
+          sitekey={CAPTCHA_SITE_KEY}
           theme={theme === "dark" ? "dark" : "light"}
-          onVerify={(token) => setCaptchaToken(token)}
+          onVerify={setCaptchaToken}
           onExpire={() => setCaptchaToken("")}
         />
-      </div>
+      )}
 
-      <div className="mt-6 flex flex-wrap items-center gap-x-[3ch] gap-y-3">
-        <button type="submit" disabled={loading} className="btn">
-          {loading ? "Sending..." : "Send message"}
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
+        <button type="submit" disabled={pending} className="btn btn-primary">
+          {pending ? "Sending…" : "Send message"}
         </button>
-        {error && (
-          <p role="alert" className="text-fg">
-            <span className="text-dim">error:</span> {error}
+        {result && !result.ok && (
+          <p role="alert" className="text-ink">
+            {result.error}
           </p>
         )}
       </div>

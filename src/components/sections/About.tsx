@@ -1,97 +1,37 @@
-import Image from "next/image";
-import { Panel } from "@/components/terminal/Panel";
-import { Prompt } from "@/components/terminal/Prompt";
-
-// fastfetch-style system info. "Uptime" is years of experience.
-const facts = [
-  ["Role", "Full stack developer"],
-  ["Location", "Balayan, Batangas, PH"],
-  ["Uptime", "2+ years"],
-  ["Projects", "15+"],
-  ["OS", "Arch Linux"],
-  ["Shell", "zsh"],
-  ["Editor", "Neovim"],
-  ["Terminal", "Ghostty"],
-] as const;
+import { setup, skills, softSkills } from "@/lib/content";
 
 export function About() {
   return (
-    <section id="about" tabIndex={-1} aria-labelledby="about-name" className="workspace">
-      <div className="grid gap-3 lg:min-h-[calc(100svh-var(--bar-h)-3rem)] lg:grid-cols-[minmax(0,1.75fr)_minmax(0,1fr)]">
-        <Panel title="about" titleAs="span" focused className="flex flex-col @container">
-          <Prompt command="whoami" typed />
+    <section id="about" aria-labelledby="about-title" className="page py-24 md:py-32">
+      <div className="grid gap-x-10 gap-y-14 lg:grid-cols-12">
+        <div className="lg:col-span-6">
+          <h2 id="about-title" className="section-title">
+            About
+          </h2>
+          <p className="lead mt-8 max-w-[52ch] text-ink">
+            Passionate full-stack developer with ~2 years of experience building scalable web
+            applications. I enjoy creating seamless user experiences that combine beautiful design
+            with secure development.
+          </p>
+          <p className="mt-6 max-w-[56ch]">
+            I’m finishing a BS in Information Technology at Batangas State University, where my
+            thesis became iCARE++. Day to day I work on Linux, with {setup.slice(0, -1).join(", ")}{" "}
+            and {setup[setup.length - 1]}.
+          </p>
+        </div>
 
-          <div className="after-cmd flex flex-1 flex-col">
-            <h1
-              id="about-name"
-              className="mt-4 font-display text-[min(50cqi,30svh)] leading-[0.8] text-fg"
-            >
-              Linux
-              <br />
-              Adona
-            </h1>
-
-            <p className="mt-8 max-w-[62ch] text-soft">
-              Passionate full-stack developer with ~2 years of experience building scalable
-              web applications. I enjoy creating seamless user experiences that combine
-              beautiful design with secure development.
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center gap-x-[3ch] gap-y-4">
-              <a href="/Resume.pdf" download className="btn">
-                Download résumé
-              </a>
-              <a
-                href="https://github.com/mdk-zero"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link"
-              >
-                GitHub
-              </a>
-              <a
-                href="https://www.facebook.com/Linux.Sale.Adona"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link"
-              >
-                Facebook
-              </a>
+        <dl className="grid content-start gap-x-10 gap-y-8 sm:grid-cols-2 lg:col-span-6 lg:pt-3">
+          {skills.map((group) => (
+            <div key={group.group}>
+              <dt className="text-base font-bold text-ink">{group.group}</dt>
+              <dd className="mt-2">{group.items.join(", ")}</dd>
             </div>
-
-            <Prompt cursor className="mt-10" />
+          ))}
+          <div className="sm:col-span-2">
+            <dt className="text-base font-bold text-ink">Working style</dt>
+            <dd className="mt-2">{softSkills.join(", ")}</dd>
           </div>
-        </Panel>
-
-        <Panel title="fastfetch" titleAs="span" className="@container">
-          <div className="grid gap-6 @[30rem]:grid-cols-[11rem_minmax(0,1fr)]">
-            <div className="relative aspect-[4/3] @[30rem]:aspect-[4/5]">
-              <Image
-                src="/profile-pic.jpg"
-                alt="Linux Adona seated in a rattan chair in front of framed maps of Balayan Bay"
-                fill
-                preload
-                sizes="(min-width: 1024px) 30vw, 100vw"
-                className="dimmable object-cover object-[50%_30%]"
-              />
-            </div>
-
-            <div>
-              <p className="font-bold text-blue">mdk0@arch</p>
-              <p aria-hidden="true" className="text-dim">
-                ---------
-              </p>
-              <dl className="kv mt-1">
-                {facts.map(([key, value]) => (
-                  <div key={key} className="contents">
-                    <dt className="text-blue">{key}</dt>
-                    <dd>{value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          </div>
-        </Panel>
+        </dl>
       </div>
     </section>
   );
