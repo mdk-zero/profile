@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
 
 export type DotSection = { id: string; label: string };
 
@@ -83,14 +82,8 @@ export function SectionDots({ sections }: { sections: DotSection[] }) {
             >
               <span
                 aria-hidden="true"
-                className={cn(
-                  "block transition-[width,height,background-color,border-color] duration-150",
-                  i === active
-                    ? "size-2.5 bg-blue"
-                    : i < active
-                      ? "size-2 bg-ink group-hover:bg-blue"
-                      : "size-2 border border-field bg-paper group-hover:border-blue"
-                )}
+                className="section-dot"
+                data-state={i === active ? "active" : i < active ? "passed" : "upcoming"}
               />
               <span
                 aria-hidden="true"

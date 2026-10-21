@@ -406,6 +406,59 @@
     opacity: 1;
   }
 
+  /* Section dots (SectionDots.tsx). Upcoming dots are outlined; as the progress line
+     reaches a dot its fill grows in, and the current section's dot grows and turns blue.
+     Transitions, not keyframes, so scrolling back and forth retargets smoothly. */
+  .section-dot {
+    position: relative;
+    display: block;
+    width: 0.5rem;
+    height: 0.5rem;
+    border: 1px solid var(--c-field);
+    background: var(--c-paper);
+    transition:
+      transform 200ms var(--ease-out),
+      border-color 200ms ease;
+  }
+
+  .section-dot::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    background: var(--c-ink);
+    opacity: 0;
+    transform: scale(0.4);
+    transition:
+      transform 200ms var(--ease-out),
+      opacity 200ms var(--ease-out),
+      background-color 200ms ease;
+  }
+
+  .section-dot[data-state="passed"]::after,
+  .section-dot[data-state="active"]::after {
+    opacity: 1;
+    transform: none;
+  }
+
+  .section-dot[data-state="active"] {
+    border-color: var(--c-blue);
+    transform: scale(1.25);
+  }
+
+  .section-dot[data-state="active"]::after {
+    background: var(--c-blue);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .group:hover .section-dot {
+      border-color: var(--c-blue);
+    }
+
+    .group:hover .section-dot::after {
+      background: var(--c-blue);
+    }
+  }
+
   /* Command palette (native <dialog>, so focus trapping and Esc come for free). */
   .palette {
     width: min(40rem, calc(100vw - 2rem));
@@ -440,6 +493,18 @@
 
     .photocard {
       --rest: 0deg;
+    }
+
+    /* Dots still fade and change colour, without growing. */
+    .section-dot {
+      transition: border-color 200ms ease;
+    }
+
+    .section-dot::after {
+      transform: none;
+      transition:
+        opacity 200ms ease,
+        background-color 200ms ease;
     }
 
     .palette[open] {
