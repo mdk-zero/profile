@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Menu, Moon, Sun, X } from "lucide-react";
+import { Menu, Moon, Search, Sun, X } from "lucide-react";
 import { useTheme } from "@/components/ThemeProvider";
+import { openCommandPalette, useModKeyLabel } from "@/components/search/CommandPalette";
 import { sections } from "@/lib/content";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -53,6 +54,7 @@ export function Navbar() {
   const active = useActiveSection();
   const [menuOpen, setMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const modKey = useModKeyLabel();
   const nextTheme = theme === "dark" ? "light" : "dark";
 
   // Close the mobile menu with Escape.
@@ -98,6 +100,17 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={openCommandPalette}
+            aria-keyshortcuts="Control+K Meta+K /"
+            className="flex h-10 cursor-pointer items-center gap-3 border border-rule px-3 text-base text-muted transition-colors hover:border-field hover:text-ink"
+          >
+            <Search className="size-4" aria-hidden="true" />
+            <span className="hidden sm:inline">Search</span>
+            <span className="sr-only sm:hidden">Search</span>
+            <kbd className="kbd hidden sm:inline-flex">{modKey} K</kbd>
+          </button>
           <button
             type="button"
             onClick={toggleTheme}
