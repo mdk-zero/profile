@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useSyncExternalStore, ReactNode } from "react";
 
 type Theme = "dark" | "light";
 
@@ -9,44 +9,55 @@ interface ThemeContextValue {
   toggleTheme: () => void;
 }
 
+const STORAGE_KEY = "portfolio-theme";
+
 const ThemeContext = createContext<ThemeContextValue>({
   theme: "dark",
   toggleTheme: () => {},
 });
 
+// The theme lives on <html> as a class. The inline ThemeScript in the root layout sets it
+// before first paint, so React reads it from there instead of keeping a second copy.
+function applyTheme(theme: Theme) {
+  const root = document.documentElement;
+  root.classList.remove("theme-dark", "theme-light");
+  root.classList.add(`theme-${theme}`);
+}
+
+function subscribe(onChange: () => void) {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+  return () => observer.disconnect();
+}
+
+const getSnapshot = (): Theme =>
+  document.documentElement.classList.contains("theme-light") ? "light" : "dark";
+
+const getServerSnapshot = (): Theme => "dark";
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
-  useEffect(() => {
-    const stored = localStorage.getItem("portfolio-theme");
-    if (stored === "light" || stored === "dark") {
-      setTheme(stored);
-    }
-  }, []);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    root.classList.remove("theme-dark", "theme-light");
-    root.classList.add(`theme-${theme}`);
-    localStorage.setItem("portfolio-theme", theme);
-  }, [theme]);
-
+  // A page restored from the back/forward cache may predate a theme change in another tab.
   useEffect(() => {
     const handlePageshow = () => {
-      const stored = localStorage.getItem("portfolio-theme") as Theme;
-      if (stored === "light" || stored === "dark") {
-        setTheme(stored);
-      }
-      const root = document.documentElement;
-      root.classList.remove("theme-dark", "theme-light");
-      root.classList.add(`theme-${stored || "dark"}`);
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        applyTheme(stored === "light" ? "light" : "dark");
+      } catch {}
     };
 
     window.addEventListener("pageshow", handlePageshow);
     return () => window.removeEventListener("pageshow", handlePageshow);
   }, []);
 
-  const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
+  const toggleTheme = useCallback(() => {
+    const next: Theme = theme === "dark" ? "light" : "dark";
+    applyTheme(next);
+    try {
+      localStorage.setItem(STORAGE_KEY, next);
+    } catch {}
+  }, [theme]);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

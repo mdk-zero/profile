@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Navbar } from "@/components/layout/Navbar";
+import { StatusBar } from "@/components/layout/StatusBar";
 import { Footer } from "@/components/layout/Footer";
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
@@ -14,8 +14,10 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <Navbar />
-      <main className="flex-1">{children}</main>
+      <StatusBar />
+      <main className="mx-auto flex max-w-[1360px] flex-col gap-16 px-3 pt-[calc(var(--bar-h)+1.5rem)]">
+        {children}
+      </main>
       <Footer />
     </>
   );

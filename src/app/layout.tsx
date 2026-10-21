@@ -1,22 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Figtree } from "next/font/google";
+import { Atkinson_Hyperlegible_Mono, VT323 } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import AnimationReset from "@/components/AnimationReset";
 import { LayoutWrapper } from "@/components/LayoutWrapper";
-import { AppProvider } from "@/components/AppContext";
 
-const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Body face. adjustFontFallback is off so glyphs the web font lacks (box drawing in
+// `tree` output) fall through to a system monospace face instead of a metric-matched Arial.
+const atkinsonMono = Atkinson_Hyperlegible_Mono({
   subsets: ["latin"],
+  variable: "--font-atkinson-mono",
+  adjustFontFallback: false,
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// Display face, used only for the name: a DEC terminal bitmap font, like a TTY at full size.
+const vt323 = VT323({
   subsets: ["latin"],
+  weight: "400",
+  variable: "--font-vt323",
 });
 
 export const metadata: Metadata = {
@@ -30,14 +31,20 @@ export const metadata: Metadata = {
 // Applies the stored theme before first paint to avoid a flash of the wrong theme.
 // Must stay a raw inline <script> in <head> so it runs during HTML parse — next/script
 // with beforeInteractive defers inline code to the Next.js runtime, which paints first.
+// React 19 strips <html>'s attributes when it hydrates it, so the script also watches the
+// class and restores the theme in the same task (MutationObserver runs before paint).
 function ThemeScript() {
   const script = `
     (function() {
-      try {
-        var theme = localStorage.getItem('portfolio-theme') || 'dark';
-        document.documentElement.classList.remove('theme-dark', 'theme-light');
-        document.documentElement.classList.add('theme-' + theme);
-      } catch (e) {}
+      var root = document.documentElement;
+      function applyStoredTheme() {
+        if (root.classList.contains('theme-dark') || root.classList.contains('theme-light')) return;
+        var theme = 'dark';
+        try { if (localStorage.getItem('portfolio-theme') === 'light') theme = 'light'; } catch (e) {}
+        root.classList.add('theme-' + theme);
+      }
+      applyStoredTheme();
+      new MutationObserver(applyStoredTheme).observe(root, { attributes: true, attributeFilter: ['class'] });
     })();
   `;
   return <script dangerouslySetInnerHTML={{ __html: script }} />;
@@ -53,26 +60,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    // <html> carries no className so hydration leaves the theme class from ThemeScript alone.
     <html lang="en" suppressHydrationWarning>
       <head>
         <ThemeScript />
       </head>
-      <body className={cn(
-        "min-h-screen",
-        "antialiased",
-        figtree.variable,
-        geistSans.variable,
-        geistMono.variable,
-        "font-mono"
-      )}>
+      <body className={cn("min-h-screen antialiased", atkinsonMono.variable, vt323.variable)}>
         <ThemeProvider>
-          <AppProvider>
-            <AnimationReset>
-              <LayoutWrapper>
-                {children}
-              </LayoutWrapper>
-            </AnimationReset>
-          </AppProvider>
+          <LayoutWrapper>{children}</LayoutWrapper>
         </ThemeProvider>
       </body>
     </html>
