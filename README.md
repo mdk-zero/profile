@@ -6,7 +6,7 @@ Passionate full-stack developer with ~2 years of experience building scalable we
 applications. I enjoy creating seamless user experiences that combine beautiful design
 with secure development.
 
-- 📧 [linuxadona17@gmail.com](mailto:linuxadona17@gmail.com)
+- 📧 [linux@mdk0.tech](mailto:linux@mdk0.tech)
 - 🐙 [github.com/mdk-zero](https://github.com/mdk-zero)
 - 💬 [Facebook](https://www.facebook.com/Linux.Sale.Adona)
 - 📄 [Résumé](public/Resume.pdf)
