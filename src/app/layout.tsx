@@ -21,9 +21,7 @@ export const metadata: Metadata = {
   description:
     "Linux Adona designs and builds websites and web apps for businesses, students and local government. Based in Balayan, Batangas, Philippines.",
   icons: {
-    icon: { url: "/logo.png", type: "image/png" },
-    // iOS fills transparency with black, which would hide logo.png's dark mark, so the
-    // home-screen icon keeps the opaque app-style version.
+    icon: { url: "/tab-logo.png", type: "image/png" },
     apple: "/tab-logo.png",
   },
 };
