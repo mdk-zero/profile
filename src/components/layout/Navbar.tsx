@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Menu, Moon, Search, Sun, X } from "lucide-react";
+import { ResumeButton } from "@/components/ResumeButton";
 import { useTheme } from "@/components/ThemeProvider";
 import { openCommandPalette, useModKeyLabel } from "@/components/search/CommandPalette";
 import { sections } from "@/lib/content";
@@ -127,9 +128,7 @@ export function Navbar() {
               <Moon className="size-5" aria-hidden="true" />
             )}
           </button>
-          <a href={site.resume} download className="btn btn-primary hidden min-h-10 px-4 whitespace-nowrap md:inline-flex">
-            Download résumé
-          </a>
+          <ResumeButton className="hidden min-h-10 px-4 whitespace-nowrap md:inline-flex" />
           <button
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
@@ -162,9 +161,7 @@ export function Navbar() {
               </li>
             ))}
             <li className="mt-4 md:hidden">
-              <a href={site.resume} download className="btn btn-primary w-full">
-                Download résumé
-              </a>
+              <ResumeButton className="w-full" />
             </li>
           </ul>
         </nav>
