@@ -5,24 +5,16 @@ import { Experience } from "@/components/sections/Experience";
 import { Activity } from "@/components/sections/Activity";
 import { About } from "@/components/sections/About";
 import { Contact } from "@/components/sections/Contact";
-import { PageMap, type MapSection } from "@/components/PageMap";
+import { SectionDots } from "@/components/SectionDots";
 import { CommandPalette } from "@/components/search/CommandPalette";
-import { getProjects } from "@/lib/projects";
+import { sections } from "@/lib/content";
 import { getSearchIndex } from "@/lib/search-index";
 
-export default async function HomePage() {
-  const [searchItems, projects] = await Promise.all([getSearchIndex(), getProjects()]);
+// One dot per section, starting with the intro.
+const dotSections = [{ id: "top", label: "Intro" }, ...sections.map(({ id, label }) => ({ id, label }))];
 
-  // The page map draws each section as a miniature of its layout.
-  const mapSections: MapSection[] = [
-    { id: "top", label: "Intro", kind: "hero" },
-    { id: "projects", label: "Projects", kind: "media", count: projects.length },
-    { id: "services", label: "Services", kind: "columns" },
-    { id: "experience", label: "Experience", kind: "timeline" },
-    { id: "activity", label: "Activity", kind: "heatmap" },
-    { id: "about", label: "About", kind: "split" },
-    { id: "contact", label: "Contact", kind: "form" },
-  ];
+export default async function HomePage() {
+  const searchItems = await getSearchIndex();
 
   return (
     <>
@@ -33,7 +25,7 @@ export default async function HomePage() {
       <Activity />
       <About />
       <Contact />
-      <PageMap sections={mapSections} />
+      <SectionDots sections={dotSections} />
       <CommandPalette items={searchItems} />
     </>
   );
