@@ -107,6 +107,8 @@
 .theme-light,
 .theme-dark {
   --nav-h: 4rem;
+  /* Strong ease-out for things entering the screen. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --radius: 0px;
 
   --background: var(--c-paper);
@@ -451,4 +453,13 @@
     opacity: 0;
     translate: 0 -0.5rem;
   }
+}
+
+/* Theme switch reveal (see toggleTheme): the old theme holds still while the new one is
+   uncovered by a clip-path animated from JS. Without data-theme-reveal (reduced motion),
+   the browser's default crossfade plays. */
+:root[data-theme-reveal]::view-transition-old(root),
+:root[data-theme-reveal]::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }

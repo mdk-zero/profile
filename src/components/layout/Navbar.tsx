@@ -113,7 +113,11 @@ export function Navbar() {
           </button>
           <button
             type="button"
-            onClick={toggleTheme}
+            data-theme-toggle=""
+            onClick={(e) => {
+              const box = e.currentTarget.getBoundingClientRect();
+              toggleTheme({ x: box.left + box.width / 2, y: box.top + box.height / 2 });
+            }}
             aria-label={`Switch to ${nextTheme} theme`}
             className="flex size-10 cursor-pointer items-center justify-center text-muted transition-colors hover:text-ink"
           >

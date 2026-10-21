@@ -4,9 +4,12 @@ import { createContext, useCallback, useContext, useEffect, useSyncExternalStore
 
 type Theme = "dark" | "light";
 
+// Where the switch was pressed, in viewport pixels; the new theme grows out from here.
+type Origin = { x: number; y: number };
+
 interface ThemeContextValue {
   theme: Theme;
-  toggleTheme: () => void;
+  toggleTheme: (origin?: Origin) => void;
 }
 
 const STORAGE_KEY = "portfolio-theme";
@@ -35,6 +38,13 @@ const getSnapshot = (): Theme =>
 
 const getServerSnapshot = (): Theme => "dark";
 
+// Without an explicit origin (e.g. the command palette), reveal from the nav's toggle.
+function defaultOrigin(): Origin {
+  const toggle = document.querySelector("[data-theme-toggle]")?.getBoundingClientRect();
+  if (toggle) return { x: toggle.left + toggle.width / 2, y: toggle.top + toggle.height / 2 };
+  return { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+}
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
@@ -53,13 +63,52 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("pageshow", handlePageshow);
   }, []);
 
-  const toggleTheme = useCallback(() => {
-    const next: Theme = theme === "dark" ? "light" : "dark";
-    applyTheme(next);
-    try {
-      localStorage.setItem(STORAGE_KEY, next);
-    } catch {}
-  }, [theme]);
+  // The new theme is revealed as a rectangle growing out of the switch while the old one
+  // holds still underneath (a view transition). Browsers without view transitions switch
+  // instantly; with reduced motion the browser's default crossfade plays instead.
+  const toggleTheme = useCallback(
+    (origin?: Origin) => {
+      const next: Theme = theme === "dark" ? "light" : "dark";
+      const commit = () => {
+        applyTheme(next);
+        try {
+          localStorage.setItem(STORAGE_KEY, next);
+        } catch {}
+      };
+
+      if (!document.startViewTransition) {
+        commit();
+        return;
+      }
+
+      const root = document.documentElement;
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!reduce) root.dataset.themeReveal = "";
+
+      const transition = document.startViewTransition(async () => {
+        commit();
+        // Give React a tick to re-render the switch's icon before the new state is captured.
+        await new Promise((resolve) => setTimeout(resolve, 0));
+      });
+      transition.finished.finally(() => delete root.dataset.themeReveal);
+      if (reduce) return;
+
+      transition.ready.then(() => {
+        const { x, y } = origin ?? defaultOrigin();
+        const right = window.innerWidth - x;
+        const bottom = window.innerHeight - y;
+        root.animate(
+          { clipPath: [`inset(${y}px ${right}px ${bottom}px ${x}px)`, "inset(0px 0px 0px 0px)"] },
+          {
+            duration: 400,
+            easing: getComputedStyle(root).getPropertyValue("--ease-out").trim(),
+            pseudoElement: "::view-transition-new(root)",
+          }
+        );
+      });
+    },
+    [theme]
+  );
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
