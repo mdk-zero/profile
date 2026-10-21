@@ -46,7 +46,7 @@ export function PhotoCard({ name, handle, role, photo, details, footer }: PhotoC
   };
 
   return (
-    <div className="mx-auto w-full max-w-[20rem] sm:max-w-[23rem] lg:mr-0 lg:ml-auto">
+    <div className="mx-auto w-full max-w-[22rem] sm:max-w-[27rem] lg:mr-0 lg:ml-auto">
       <div
         ref={cardRef}
         role="group"
@@ -64,7 +64,7 @@ export function PhotoCard({ name, handle, role, photo, details, footer }: PhotoC
                 alt={photo.alt}
                 fill
                 preload
-                sizes="(min-width: 640px) 23rem, 20rem"
+                sizes="(min-width: 640px) 27rem, 22rem"
                 className="object-cover object-[50%_30%]"
                 draggable={false}
               />
