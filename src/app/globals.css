@@ -7,9 +7,10 @@
 @custom-variant theme-dark (&:is(.theme-dark *));
 
 @theme inline {
-  --font-sans: var(--font-atkinson-mono), ui-monospace, "DejaVu Sans Mono", Menlo, Consolas, monospace;
-  --font-mono: var(--font-atkinson-mono), ui-monospace, "DejaVu Sans Mono", Menlo, Consolas, monospace;
-  --font-heading: var(--font-atkinson-mono), ui-monospace, monospace;
+  /* Fallback faces are part of the next/font variable (see layout.tsx). */
+  --font-sans: var(--font-atkinson-mono);
+  --font-mono: var(--font-atkinson-mono);
+  --font-heading: var(--font-atkinson-mono);
   --font-display: var(--font-vt323), ui-monospace, monospace;
 
   /* Terminal palette */

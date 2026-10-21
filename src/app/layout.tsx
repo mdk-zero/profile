@@ -5,11 +5,13 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { LayoutWrapper } from "@/components/LayoutWrapper";
 
-// Body face. adjustFontFallback is off so glyphs the web font lacks (box drawing in
-// `tree` output) fall through to a system monospace face instead of a metric-matched Arial.
+// Body face. The explicit fallback list sends glyphs the web font lacks (box drawing in
+// `tree` output) to system monospace faces instead of a metric-matched Arial. It also stops
+// Turbopack looking up precomputed fallback metrics, which it has none of for this font.
 const atkinsonMono = Atkinson_Hyperlegible_Mono({
   subsets: ["latin"],
   variable: "--font-atkinson-mono",
+  fallback: ["ui-monospace", "DejaVu Sans Mono", "Menlo", "Consolas", "monospace"],
   adjustFontFallback: false,
 });
 
