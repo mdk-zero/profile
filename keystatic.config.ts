@@ -1,9 +1,18 @@
 import { config, fields, collection } from "@keystatic/core";
 
+// Local mode edits the files in src/content directly, so it only works on your own
+// machine. The deployed site has no writable copy of the repo, so there every save
+// is a commit to GitHub, which Vercel then redeploys. Run dev with
+// NEXT_PUBLIC_KEYSTATIC_STORAGE=github to use the GitHub flow locally (needed once
+// to create the GitHub App).
+const useLocalStorage =
+  process.env.NODE_ENV === "development" &&
+  process.env.NEXT_PUBLIC_KEYSTATIC_STORAGE !== "github";
+
 export default config({
-  storage: {
-    kind: "local",
-  },
+  storage: useLocalStorage
+    ? { kind: "local" }
+    : { kind: "github", repo: "mdk-zero/profile" },
   collections: {
     projects: collection({
       label: "Projects",
