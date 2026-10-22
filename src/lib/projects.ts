@@ -1,3 +1,6 @@
+import { createHash } from "crypto";
+import fs from "fs";
+import path from "path";
 import { cache } from "react";
 import { createReader } from "@keystatic/core/reader";
 import keystaticConfig from "../../keystatic.config";
@@ -14,7 +17,38 @@ export type Project = {
   publishedAt: string | null;
 };
 
-type ImageValue = string | { src?: string } | null | undefined;
+const PROJECTS_DIR = path.join(process.cwd(), "src/content/projects");
+
+const IMAGE_TYPES: Record<string, string> = {
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".webp": "image/webp",
+  ".gif": "image/gif",
+  ".avif": "image/avif",
+};
+
+// Keystatic saves a project's cover as image.<ext> in the project's folder, in
+// whatever format was uploaded. `version` is a hash of the file, so the image URL
+// changes when the cover is replaced and no cache keeps serving the old one.
+export function readProjectImage(slug: string) {
+  const dir = path.join(PROJECTS_DIR, slug);
+  // The slug can come from a URL, so it must name a folder directly in PROJECTS_DIR.
+  if (path.dirname(dir) !== PROJECTS_DIR || !fs.existsSync(dir)) return null;
+
+  const fileName = fs.readdirSync(dir).find((name) => {
+    const { name: base, ext } = path.parse(name);
+    return base === "image" && ext.toLowerCase() in IMAGE_TYPES;
+  });
+  if (!fileName) return null;
+
+  const file = fs.readFileSync(path.join(dir, fileName));
+  return {
+    file,
+    contentType: IMAGE_TYPES[path.extname(fileName).toLowerCase()],
+    version: createHash("sha1").update(file).digest("hex").slice(0, 10),
+  };
+}
 
 // Keystatic stores whatever was typed, so bare domains ("example.com") are common.
 // Without a scheme the browser treats the href as a relative path and resolves it
@@ -33,16 +67,14 @@ export const getProjects = cache(async (): Promise<Project[]> => {
 
   return projects
     .map((project) => {
-      const imageValue = project.entry.image as ImageValue;
-      const hasImage =
-        typeof imageValue === "string" || (typeof imageValue === "object" && !!imageValue?.src);
+      const image = readProjectImage(project.slug);
 
       return {
         id: project.slug,
         title: typeof project.entry.title === "string" ? project.entry.title : project.slug,
         description: project.entry.description || "",
-        image: hasImage
-          ? `/api/project-image/${encodeURIComponent(project.slug)}`
+        image: image
+          ? `/api/project-image/${encodeURIComponent(project.slug)}/${image.version}`
           : "/placeholder.png",
         tags: [...(project.entry.tags || [])],
         liveUrl: toAbsoluteUrl(project.entry.liveUrl),
