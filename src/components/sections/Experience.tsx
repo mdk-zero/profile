@@ -1,4 +1,5 @@
-import { certificateGroups, certificateHref, education, work } from "@/lib/content";
+import { ViewCertificateButton } from "@/components/CertificateViewer";
+import { certificateGroups, education, work } from "@/lib/content";
 
 const certificateCount = certificateGroups.reduce((n, g) => n + g.certificates.length, 0);
 
@@ -63,7 +64,7 @@ export function Experience() {
       <div id="certificates" className="mt-20">
         <h3 className="text-2xl font-bold">Certificates</h3>
         <p className="mt-3">
-          {certificateCount} certificates. Select one to open the PDF.
+          {certificateCount} certificates. Select one to view it.
         </p>
         <div className="mt-8 grid gap-x-10 gap-y-12 md:grid-cols-2">
           {certificateGroups.map((group) => (
@@ -71,16 +72,14 @@ export function Experience() {
               <h4 className="text-base font-bold">{group.issuer}</h4>
               <ul className="mt-3 border-t border-rule">
                 {group.certificates.map((cert) => (
-                  <li key={cert.file} className="border-b border-rule">
-                    <a
-                      href={certificateHref(cert)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex min-h-12 items-center justify-between gap-6 py-3 text-ink transition-colors hover:text-blue"
+                  <li key={cert.image} className="border-b border-rule">
+                    <ViewCertificateButton
+                      image={cert.image}
+                      className="flex min-h-12 w-full cursor-pointer items-center justify-between gap-6 py-3 text-left text-ink transition-colors hover:text-blue"
                     >
                       <span>{cert.name}</span>
-                      <span className="shrink-0 text-sm text-muted">PDF</span>
-                    </a>
+                      <span className="shrink-0 text-sm text-muted">View</span>
+                    </ViewCertificateButton>
                   </li>
                 ))}
               </ul>

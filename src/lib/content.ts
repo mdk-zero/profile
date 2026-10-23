@@ -94,59 +94,55 @@ export const softSkills = [
 
 export const setup = ["Arch Linux", "Neovim", "Ghostty", "zsh", "Tmux"];
 
-export type Certificate = { name: string; file: string };
+// Certificates are shown as images in a viewer, never as the original PDFs, so there is
+// no editable file to download. Each image sits at public/certificates/<image>.webp,
+// rendered from the PDF at 1600px wide: readable on screen, too coarse to reprint.
+export type Certificate = { name: string; image: string; width: number; height: number };
+
+const cisco = (name: string, image: string): Certificate => ({ name, image, width: 1600, height: 1084 });
+const certiport = (name: string, image: string): Certificate => ({ name, image, width: 1600, height: 1237 });
 
 export const certificateGroups: { issuer: string; certificates: Certificate[] }[] = [
   {
     issuer: "Cisco Networking Academy",
     certificates: [
-      {
-        name: "CCNA: Switching, Routing and Wireless Essentials",
-        file: "CCNA_Switching_Routing_and_Wireless_Essentials.pdf",
-      },
-      { name: "Introduction to Packet Tracer", file: "Introduction_to_Packet_Tracer.pdf" },
-      {
-        name: "AI Fundamentals with IBM SkillsBuild",
-        file: "AI_Fundamentals_with_IBM_SkillsBuild.pdf",
-      },
-      { name: "Introduction to Modern AI", file: "Introduction_to_Modern_AI.pdf" },
-      {
-        name: "Apply AI: Analyze Customer Reviews",
-        file: "Apply_AI-_Analyze_Customer_Reviews.pdf",
-      },
-      { name: "Introduction to Data Science", file: "Introduction_to_Data_Science.pdf" },
-      { name: "Data Analytics Essentials", file: "Data_Analytics_Essentials.pdf" },
-      { name: "English for IT 1", file: "English_for_IT_1.pdf" },
-      { name: "English for IT 2", file: "English_for_IT_2.pdf" },
+      cisco("CCNA: Switching, Routing and Wireless Essentials", "ccna-switching-routing-and-wireless-essentials"),
+      cisco("Introduction to Packet Tracer", "introduction-to-packet-tracer"),
+      cisco("AI Fundamentals with IBM SkillsBuild", "ai-fundamentals-with-ibm-skillsbuild"),
+      cisco("Introduction to Modern AI", "introduction-to-modern-ai"),
+      cisco("Apply AI: Analyze Customer Reviews", "apply-ai-analyze-customer-reviews"),
+      cisco("Introduction to Data Science", "introduction-to-data-science"),
+      cisco("Data Analytics Essentials", "data-analytics-essentials"),
+      cisco("English for IT 1", "english-for-it-1"),
+      cisco("English for IT 2", "english-for-it-2"),
     ],
   },
   {
     issuer: "Information Technology Specialist",
     certificates: [
-      { name: "ITS: Data Analytics", file: "ITS - Data Analytics.pdf" },
-      { name: "ITS: Databases", file: "ITS - Databases.pdf" },
-      {
-        name: "ITS: Device Configuration and Management",
-        file: "ITS - Device Configuration and Management.pdf",
-      },
+      certiport("ITS: Data Analytics", "its-data-analytics"),
+      certiport("ITS: Databases", "its-databases"),
+      certiport("ITS: Device Configuration and Management", "its-device-configuration-and-management"),
     ],
   },
   {
     issuer: "Microsoft",
-    certificates: [
-      { name: "Microsoft Office Specialist", file: "Microsoft Office Specialist.pdf" },
-    ],
+    certificates: [certiport("Microsoft Office Specialist", "microsoft-office-specialist")],
   },
   {
     issuer: "Webinars",
     certificates: [
-      { name: "IoT Cybersecurity Webinar", file: "IoT Cybersecurity Webinar Certificate.pdf" },
+      {
+        name: "IoT Cybersecurity Webinar",
+        image: "iot-cybersecurity-webinar-certificate",
+        width: 1600,
+        height: 1132,
+      },
     ],
   },
 ];
 
-export const certificateHref = (cert: Certificate) =>
-  `/Certificates/${encodeURIComponent(cert.file)}`;
+export const certificateSrc = (cert: Certificate) => `/certificates/${cert.image}.webp`;
 
 // The page's sections, in order. `nav` marks the ones listed in the top navigation.
 export const sections = [

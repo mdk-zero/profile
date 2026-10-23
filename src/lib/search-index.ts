@@ -1,7 +1,6 @@
 import type { SearchItem } from "@/components/search/CommandPalette";
 import {
   certificateGroups,
-  certificateHref,
   education,
   sections,
   services,
@@ -72,12 +71,11 @@ export async function getSearchIndex(): Promise<SearchItem[]> {
 
     ...certificateGroups.flatMap((g) =>
       g.certificates.map((c) => ({
-        id: `certificate-${slug(c.file)}`,
+        id: `certificate-${c.image}`,
         group: "Certificates" as const,
         title: c.name,
-        subtitle: `${g.issuer}, opens the PDF`,
-        href: certificateHref(c),
-        external: true,
+        subtitle: g.issuer,
+        certificate: c.image,
       }))
     ),
 

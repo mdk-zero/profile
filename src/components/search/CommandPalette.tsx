@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { CornerDownLeft, Search } from "lucide-react";
+import { openCertificate } from "@/components/CertificateViewer";
 import { useTheme } from "@/components/ThemeProvider";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -25,6 +26,8 @@ export type SearchItem = {
   external?: boolean;
   download?: boolean;
   action?: "toggle-theme" | "copy-email";
+  /** Opens this certificate (its `image` name) in the certificate viewer. */
+  certificate?: string;
 };
 
 const OPEN_EVENT = "open-command-palette";
@@ -140,6 +143,8 @@ export function CommandPalette({ items }: { items: SearchItem[] }) {
       } catch {
         setNotice(`Couldn't copy. The address is ${site.email}`);
       }
+    } else if (item.certificate) {
+      openCertificate(item.certificate);
     } else if (item.href) {
       if (item.download || item.external) {
         const a = document.createElement("a");
